@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AAFTagsList": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

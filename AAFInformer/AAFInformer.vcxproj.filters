@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\..\f4se\f4se\GameAPI.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\GameExtraData.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\GameForms.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\GameReferences.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\GameRTTI.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\GameTypes.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\GameUtilities.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\PapyrusArgs.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\PapyrusEvents.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\PapyrusInterfaces.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\PapyrusNativeFunctions.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\PapyrusStruct.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\PapyrusValue.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se\PapyrusVM.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se_common\Utilities.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f4se\f4se_common\Relocation.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="TagsProcessor.cpp" />
+    <ClCompile Include="PositionsHolder.cpp" />
+    <ClCompile Include="..\..\f4se\f4se\GameData.cpp">
+      <Filter>f4se</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PluginAPIExport.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\..\f4se\f4se\GameAPI.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\GameExtraData.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\GameForms.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\GameReferences.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\GameRTTI.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\GameTypes.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\GameUtilities.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\PapyrusArgs.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\PapyrusEvents.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\PapyrusInterfaces.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\PapyrusNativeFunctions.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\PapyrusStruct.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\PapyrusValue.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\PapyrusVM.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se_common\Utilities.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se_common\Relocation.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="TagsProcessor.h" />
+    <ClInclude Include="..\..\f4se\f4se\GameObjects.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="TagsCategorizer.hpp" />
+    <ClInclude Include="PositionDetails.hpp" />
+    <ClInclude Include="PositionDetailsSerializer.hpp" />
+    <ClInclude Include="PositionsHolder.h" />
+    <ClInclude Include="TagsConstants.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorType.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="TagActorType.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorTypeNames.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorTypeDefs.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneType.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorPosition.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="Furniture.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="Authors.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="Narrative.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneAttributes.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneServiceAttributes.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="Contact.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="ContactFix.hpp">
+      <Filter>TagsCategories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f4se\f4se\GameData.h">
+      <Filter>f4se</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VersionInfo.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="exports.def" />
+    <None Include="..\..\f4se\f4se\GameRTTI.inl">
+      <Filter>f4se</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="f4se">
+      <UniqueIdentifier>{d54f25f1-d1d1-4124-8a54-829df1be9bad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TagsCategories">
+      <UniqueIdentifier>{71a683ff-b655-4748-b92b-f151f39a1f07}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="AAF_tags.txt" />
+  </ItemGroup>
+</Project>

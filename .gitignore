@@ -1,0 +1,11 @@
+/.hg/
+.hgignore
+.vs/*
+*.user
+*/bin/*
+*/obj/*
+/Release/*
+*/Release/*
+*/Debug/*
+*/x64/Release/*
+*/x64/Debug/*
