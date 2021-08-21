@@ -1,7 +1,8 @@
-#include "Utils.h"
 #include "f4se/GameObjects.h"
 #include "f4se/GameData.h"
 #include "f4se/GameRTTI.h"
+
+#include "Utils.h"
 
 UInt32 Utils::GetSex(Actor* actor)
 {
@@ -31,3 +32,4 @@ UInt32 Utils::GetSex(Actor* actor)
 		return npc->actorData.flags & 1;
 	return 0; // default
 }
+

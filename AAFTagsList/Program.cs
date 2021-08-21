@@ -177,8 +177,9 @@ namespace AAFTagsList
 
             foreach (var pair in allPositions)
             {
-                SearchIssue result = scenesInfos.TryGetActorsInfo(pair.Key, out IList<ActorInfo> infos);
-                summary[result].Add(pair.Key);
+                string positionId = pair.Key.ToUpperInvariant();
+                SearchIssue result = scenesInfos.TryGetActorsInfo(positionId, out IList<ActorInfo> infos);
+                summary[result].Add(positionId);
                 if (result < 0)
                     continue;
 

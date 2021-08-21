@@ -151,7 +151,7 @@ namespace AAFTagsList
             foreach (XmlAttribute attr in root.Attributes)
             {
                 if (attr.Name == "position")
-                    positionId = attr.Value;
+                    positionId = attr.Value.ToUpperInvariant();
                 if (attr.Name == "tags")
                     tagsEntry = attr.Value;
             }
@@ -204,7 +204,7 @@ namespace AAFTagsList
         {
             if (!TryGetId(root, out string animId))
                 return;
-
+            animId = animId.ToUpperInvariant();
             List<ActorInfo> actorsInfo = new List<ActorInfo>();
             foreach (XmlNode node in root)
             {
@@ -259,7 +259,7 @@ namespace AAFTagsList
         {
             if (!TryGetId(root, out string groupId))
                 return;
-
+            groupId = groupId.ToUpperInvariant();
             if (!groups.TryGetValue(groupId, out var anims))
             {
                 anims = new HashSet<string>();
@@ -274,7 +274,7 @@ namespace AAFTagsList
                     {
                         if (attr.Name == "animation")
                         {
-                            anims.Add(attr.Value);
+                            anims.Add(attr.Value.ToUpperInvariant());
                             break;
                         }
                     }
@@ -291,15 +291,15 @@ namespace AAFTagsList
             {
                 if (attr.Name == "id")
                 {
-                    positionId = attr.Value;
+                    positionId = attr.Value.ToUpperInvariant();
                 }
                 else if (attr.Name == "animation")
                 {
-                    animOrGroupId = attr.Value;
+                    animOrGroupId = attr.Value.ToUpperInvariant();
                 }
                 else if (attr.Name == "animationGroup")
                 {
-                    animOrGroupId = attr.Value;
+                    animOrGroupId = attr.Value.ToUpperInvariant();
                 }
                 else if (attr.Name == "tags")
                 {

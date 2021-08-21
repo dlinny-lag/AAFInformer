@@ -6,7 +6,7 @@
 #include "TagsProcessor.h"
 
 #include "PositionsHolder.h"
-#include "Utils.h"
+#include "StringUtils.hpp"
 
 namespace PluginAPIExport
 {
@@ -17,8 +17,8 @@ namespace PluginAPIExport
 #undef AAF_INFO_EXPORT_PAPYRUS_SCRIPT
 
 	const char* pluginName = "AAFInformer";
-	UInt32 pluginVersionInt = 0x0050;
-	const char* pluginVersionString = "0.5.0";
+	UInt32 pluginVersionInt = 0x0055;
+	const char* pluginVersionString = "0.5.5";
 	BSReadWriteLock dataLock;
 
 
@@ -46,11 +46,20 @@ namespace PluginAPIExport
 		// calculated
 		ai.Set("IsAggressor", Proc::TagsProcessor::IsAggressor(scene, info));
 		ai.Set("IsVictim", Proc::TagsProcessor::IsVictim(scene, info));
+		ai.Set("IsHandGiver", Proc::TagsProcessor::IsHandGiver(scene, info));
+		ai.Set("IsHandTaker", Proc::TagsProcessor::IsHandTaker(scene, info));
+		ai.Set("IsLegGiver", Proc::TagsProcessor::IsLegGiver(scene, info));
+		ai.Set("IsLegTaker", Proc::TagsProcessor::IsLegTaker(scene, info));
 		ai.Set("IsOralGiver", Proc::TagsProcessor::IsOralGiver(scene, info));
 		ai.Set("IsOralTaker", Proc::TagsProcessor::IsOralTaker(scene, info));
 		ai.Set("IsGenitalGiver", Proc::TagsProcessor::IsGenitalGiver(scene, info));
 		ai.Set("IsGenitalTaker", Proc::TagsProcessor::IsGenitalTaker(scene, info));
+
 		ai.Set("IsAnalTaker", Proc::TagsProcessor::IsAnalTaker(scene, info));
+		ai.Set("IsButtTaker", Proc::TagsProcessor::IsButtTaker(scene, info));
+		ai.Set("IsNippleTaker", Proc::TagsProcessor::IsNippleTaker(scene, info));
+
+		ai.Set("IsOviposGiver", Proc::TagsProcessor::IsOviposGiver(scene, info));
 	}
 
 	bool InitSceneInfo(SceneInfo& retVal, const BSFixedString& name, const Proc::SceneDetails& scene)
@@ -89,7 +98,7 @@ namespace PluginAPIExport
 			return outVal;
 		}
 
-		const auto ptr = Proc::PositionsHolder::Positions.find(name.c_str());
+		const auto ptr = Proc::PositionsHolder::Positions.find(SU::ToUpper(name.c_str()));
 		if (ptr == Proc::PositionsHolder::Positions.end())
 		{
 			_MESSAGE("Position [%s] not found", name.c_str());
@@ -134,7 +143,7 @@ namespace PluginAPIExport
 			return retVal;
 		}
 
-		const auto ptr = Proc::PositionsHolder::Positions.find(name.c_str());
+		const auto ptr = Proc::PositionsHolder::Positions.find(SU::ToUpper(name.c_str()));
 		if (ptr == Proc::PositionsHolder::Positions.end())
 		{
 			_MESSAGE("Position [%s] not found", name.c_str());
@@ -176,7 +185,7 @@ namespace PluginAPIExport
 			return retVal;
 		};
 
-		const auto ptr = Proc::PositionsHolder::Positions.find(name.c_str());
+		const auto ptr = Proc::PositionsHolder::Positions.find(SU::ToUpper(name.c_str()));
 		if (ptr == Proc::PositionsHolder::Positions.end())
 		{
 			_MESSAGE("Position [%s] not found", name.c_str());

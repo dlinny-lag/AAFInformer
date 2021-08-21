@@ -1,6 +1,8 @@
 Scriptname AAF:Info Native Hidden Const
 
 ; actor types
+; non-human type definition in list below means male
+; female version of actor type is calculated as actor type + 1
 
 int property M = 1 autoreadonly
 int property F = 2 autoreadonly
@@ -57,6 +59,7 @@ int property RoughAggressive = 2 autoreadonly
 
 
 ; actor position
+
 int property FromSide = 1 autoreadonly
 int property FromFront = 2 autoreadonly
 int property FromBehind = 4 autoreadonly
@@ -92,11 +95,23 @@ Struct ActorInfo
     bool IsAggressor
     bool IsVictim
 
+    ; integer value means amout of 'gives' or 'takes'
+    ; for example IsHandGiver = 2 means that actor uses 2 hands to contact other actor(s)
+
+    int IsHandGiver
+    int IsHandTaker
+    int IsLegGiver
+    int IsLegTaker
     int IsOralGiver
     int IsOralTaker
     int IsGenitalGiver
     int IsGenitalTaker
+
     int IsAnalTaker
+    int IsButtTaker 
+    int IsNippleTaker
+
+    int IsOviposGiver
 
     ; user defined data, not populated by API
     ; just to avoid necessity to copy this structure content
@@ -106,6 +121,7 @@ Struct ActorInfo
     int UserValue2
     string UserValue3
 EndStruct
+
 ; returns actors information for provided AAF position
 ;  positionName - name of scene, that user could see in AAF UI
 ;  actors - list of actors participated in scene

@@ -166,6 +166,7 @@
     <ClInclude Include="SceneAttributes.hpp" />
     <ClInclude Include="SceneServiceAttributes.hpp" />
     <ClInclude Include="SceneType.hpp" />
+    <ClInclude Include="StringUtils.hpp" />
     <ClInclude Include="TagActorType.hpp" />
     <ClInclude Include="TagsConstants.hpp" />
     <ClInclude Include="PluginAPIExport.hpp" />

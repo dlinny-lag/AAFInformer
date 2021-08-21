@@ -162,6 +162,7 @@
     <ClInclude Include="..\..\f4se\f4se\GameData.h">
       <Filter>f4se</Filter>
     </ClInclude>
+    <ClInclude Include="StringUtils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="VersionInfo.rc" />

@@ -1,9 +1,6 @@
 #pragma once
 
-#include <cctype>
-#include <charconv>
 #include <algorithm>
-
 #include "SceneType.hpp"
 #include "TagActorType.hpp"
 #include "ActorType.hpp"
@@ -19,19 +16,13 @@
 
 #include "ActorTypeNames.hpp"
 #include "common/IDebugLog.h"
+#include "StringUtils.hpp"
 
 namespace Proc
 {
     using namespace Parsing;
     using namespace AAFXML;
 
-    inline std::string ToUpper(const std::string s)
-    {
-        // All tags are in ASCII, so we don't care about locale during case conversion
-        std::string copy = s;
-        std::transform(copy.begin(), copy.end(), copy.begin(), [](unsigned char c) { return std::toupper(c); });
-        return copy;
-    }
 
 
     struct SceneDetails
@@ -121,7 +112,7 @@ namespace Proc
             size_t contactIndex = 0;
             for (const std::string& t : tags)
             {
-                auto upper = ToUpper(t);
+                auto upper = SU::ToUpper(t);
                 const auto tag = std::string_view(upper);
                 if (!hasAuthor && TryFillAuthor(retVal, tag, t))
                 {
@@ -394,7 +385,7 @@ namespace Proc
             bool actorsFound = false;
             for (auto& t : tags)
             {
-                auto upper = ToUpper(t);
+                auto upper = SU::ToUpper(t);
                 const auto tag = std::string_view(upper);
                 if (!hasAuthor && TryFillAuthor(retVal, tag, t))
                 {

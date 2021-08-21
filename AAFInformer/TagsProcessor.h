@@ -26,12 +26,20 @@ namespace Proc
 	{
 		bool static IsAggressor(const SceneDetails&, const ActorInfo&);
 		bool static IsVictim(const SceneDetails&, const ActorInfo&);
+		UInt32 static IsHandGiver(const SceneDetails&, const ActorInfo&);
+		UInt32 static IsHandTaker(const SceneDetails&, const ActorInfo&);
+		UInt32 static IsLegGiver(const SceneDetails&, const ActorInfo&);
+		UInt32 static IsLegTaker(const SceneDetails&, const ActorInfo&);
 		UInt32 static IsOralGiver(const SceneDetails&, const ActorInfo&);
 		UInt32 static IsOralTaker(const SceneDetails&, const ActorInfo&);
 		UInt32 static IsGenitalGiver(const SceneDetails&, const ActorInfo&);
 		UInt32 static IsGenitalTaker(const SceneDetails&, const ActorInfo&);
 
 		UInt32 static IsAnalTaker(const SceneDetails&, const ActorInfo&);
+		UInt32 static IsButtTaker(const SceneDetails&, const ActorInfo&);
+		UInt32 static IsNippleTaker(const SceneDetails&, const ActorInfo&);
+
+		UInt32 static IsOviposGiver(const SceneDetails&, const ActorInfo&);
 
 		bool static FillActors(const SceneDetails& scene, VMArray<Actor*> actors, std::vector<Proc::ActorInfo>& outVal);
 	};

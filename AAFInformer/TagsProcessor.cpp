@@ -57,6 +57,45 @@ namespace Proc
 
 		return false;
 	}
+
+	UInt32 TagsProcessor::IsHandGiver(const SceneDetails& scene, const ActorInfo& actor)
+	{
+		int retVal = 0;
+		for (const From f : actor.From)
+		{
+			retVal += f == FromHand;
+		}
+		return retVal;
+	}
+	UInt32 TagsProcessor::IsHandTaker(const SceneDetails& scene, const ActorInfo& actor)
+	{
+		int retVal = 0;
+		for (const To t : actor.To)
+		{
+			retVal += t == ToHand;
+		}
+		return retVal;
+	}
+	UInt32 TagsProcessor::IsLegGiver(const SceneDetails& scene, const ActorInfo& actor)
+	{
+		int retVal = 0;
+		for (const From f : actor.From)
+		{
+			retVal += f == FromFeet;
+		}
+		return retVal;
+	}
+	UInt32 TagsProcessor::IsLegTaker(const SceneDetails& scene, const ActorInfo& actor)
+	{
+		int retVal = 0;
+		for (const To t : actor.To)
+		{
+			retVal += t == ToFeet;
+		}
+		return retVal;
+	}
+
+
 	UInt32 TagsProcessor::IsOralGiver(const SceneDetails& scene, const ActorInfo& actor)
 	{
 		int retVal = 0;
@@ -79,24 +118,18 @@ namespace Proc
 	UInt32 TagsProcessor::IsGenitalGiver(const SceneDetails& scene, const ActorInfo& actor)
 	{
 		int retVal = 0;
-		const auto& fromPenis = fixedFrom.find(FromPenis)->second;
-		const auto& fromVagina = fixedFrom.find(FromVagina)->second;
 		for (const From f : actor.From)
 		{
-			auto p = fromPenis.find(actor.Type);
-			retVal += p != fromPenis.end() && p->second == f;
-			auto v = fromVagina.find(actor.Type);
-			retVal += v != fromVagina.end() && v->second == f;
+			auto p = fixedFromPenis.find(actor.Type);
+			retVal += p != fixedFromPenis.end() && p->second == FromPenis;
+			auto v = fixedFromVagina.find(actor.Type);
+			retVal += v != fixedFromVagina.end() && v->second == FromVagina;
 		}
 		return retVal;
 	}
 	UInt32 TagsProcessor::IsGenitalTaker(const SceneDetails& scene, const ActorInfo& actor)
 	{
 		int retVal = 0;
-		const auto& toPenis = fixedTo.find(ToPenis)->second;
-		const auto& toVagina = fixedTo.find(ToVagina)->second;
-		const auto& toStrapon = fixedTo.find(ToStrapon)->second;
-		const auto& toEither = fixedTo.find(ToEither)->second;
 
 		for (const To t : actor.To)
 		{
@@ -104,26 +137,26 @@ namespace Proc
 			{
 				case ToPenis:
 				{
-					auto p = toPenis.find(actor.Type);
-					retVal += p != toPenis.end() && p->second == ToPenis;
+					auto p = fixedToPenis.find(actor.Type);
+					retVal += p != fixedToPenis.end() && p->second == ToPenis;
 				}
 				break;
 				case ToStrapon:
 				{
-					auto s = toStrapon.find(actor.Type);
-					retVal += s != toStrapon.end() && s->second == ToPenis;
+					auto s = fixedToStrapon.find(actor.Type);
+					retVal += s != fixedToStrapon.end() && s->second == ToPenis;
 				}
 				break;
 				case ToVagina:
 				{
-					auto v = toVagina.find(actor.Type);
-					retVal += v != toVagina.end() && v->second == ToVagina;
+					auto v = fixedToVagina.find(actor.Type);
+					retVal += v != fixedToVagina.end() && v->second == ToVagina;
 				}
 				break;
 				case ToEither:
 				{
-					auto e = toEither.find(actor.Type);
-					retVal += e != toEither.end() && e->second == ToEither;
+					auto e = fixedToEither.find(actor.Type);
+					retVal += e != fixedToEither.end() && e->second == ToEither;
 				}
 				break;
 			}
@@ -137,7 +170,33 @@ namespace Proc
 		{
 			retVal += t == ToAnus || t == ToEither;
 		}
-
+		return retVal;
+	}
+	UInt32 TagsProcessor::IsButtTaker(const SceneDetails& scene, const ActorInfo& actor)
+	{
+		int retVal = 0;
+		for (const To t : actor.To)
+		{
+			retVal += t == ToButt;
+		}
+		return retVal;
+	}
+	UInt32 TagsProcessor::IsNippleTaker(const SceneDetails& scene, const ActorInfo& actor)
+	{
+		int retVal = 0;
+		for (const To t : actor.To)
+		{
+			retVal += t == ToNipples;
+		}
+		return retVal;
+	}
+	UInt32 TagsProcessor::IsOviposGiver(const SceneDetails& scene, const ActorInfo& actor)
+	{
+		int retVal = 0;
+		for (const From f : actor.From)
+		{
+			retVal += f == FromOvipos;
+		}
 		return retVal;
 	}
 

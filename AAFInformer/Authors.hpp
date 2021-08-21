@@ -19,6 +19,7 @@ namespace Parsing
 		"ROHZIMA",
 		"GRAYUSER",
 		"VADER666",
+		"RAINMAKER",
 		"SAVAGECABBAGE",
 	};
 }

@@ -11,7 +11,7 @@ namespace AAFXML
 	/// </summary>
 	enum ActorType : UInt32
 	{
-#include "../AAFTagsList/AAFTagsList/ActorType.cs"
+#include "../AAFTagsList/ActorType.cs"
 		CatF = Cat + 1,
 		Last = SupermutantBehemoth,
 	};
