@@ -76,7 +76,7 @@ Struct SceneInfo
     string Author ; if known
     string Attributes ; comma separated atrtibutes
     string Service; comma separated service attributes
-    string Furn ; Furniture, if recognized
+    string FurnGroup ; Furniture, if applicable
     string Unparsed ; tags that are not recognized. separated by comma
 EndStruct
 
@@ -130,11 +130,17 @@ ActorInfo[] function GetActors(string positionName, Actor[] actors) global nativ
 
 ; returns AAF position information
 ;  positionName - name of scene, that user could see in AAF UI
-SceneInfo function GetScene(string positionName) global native
+;  furnFormid - furniture FormId. 
+;      if it is actual furniture then FurnGroup will contain name of furniture group
+;      if not (0, for example) then FurnGroup will contain all names of furniture groups for this scene separated by comma
+SceneInfo function GetScene(string positionName, int furnFormId = 0) global native
 
 ; Populates output with actors information and returns AAF position information
 ;  positionName - name of scene, that user could see in AAF UI
 ;  actors - list of actors participated in scene
 ;  output - must be allocated and initilized by script. if some element is None then it will be skipped
 ;     if length of output is less than actor's length then then first N actor's information will be populated
-SceneInfo function GetSceneAndActors(string positionName, Actor[] actors, ActorInfo[] output) global native
+;  furnFormid - furniture FormId. 
+;      if it is actual furniture then FurnGroup will contain name of furniture group
+;      if not (0, for example) then FurnGroup will contain all names of furniture groups for this scene separated by comma
+SceneInfo function GetSceneAndActors(string positionName, Actor[] actors, ActorInfo[] output, int furnFormId = 0) global native

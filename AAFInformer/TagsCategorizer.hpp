@@ -17,6 +17,7 @@
 #include "ActorTypeNames.hpp"
 #include "common/IDebugLog.h"
 #include "StringUtils.hpp"
+#include "FormId.hpp"
 
 namespace Proc
 {
@@ -49,7 +50,7 @@ namespace Proc
         std::string Narrative;
         std::string Attributes;
         std::string Service;
-        std::string Furniture; //if recognized
+		std::vector<std::string> Furniture;
         std::vector<ActorType> Actors;
         std::vector<Proc::TagActorType> TagActors;
         
@@ -101,9 +102,15 @@ namespace Proc
             return retVal;
         }
 
-        static SceneDetails GetSceneDetails(const std::vector<ActorType>& actors, const std::vector<std::string>& tags)
+        static SceneDetails GetSceneDetails(const std::vector<ActorType>& actors, const std::vector<std::string>& locations, const std::vector<std::string>& tags)
         {
             SceneDetails retVal;
+
+            for(const auto& furnGroup : locations)
+            {
+                retVal.Furniture.emplace_back(furnGroup);
+            }
+            
             retVal.Positions.assign(actors.size(), ActorPosition::NoPosition);
             retVal.FromContacts.assign(actors.size(), std::vector<From>());
             retVal.ToContacts.assign(actors.size(), std::vector<To>());
@@ -179,15 +186,10 @@ namespace Proc
         }
         static bool TryFillFurniture(SceneDetails& retVal, const std::string_view tag)
         {
-            if (furniture.find(tag) != furniture.end())
-            {
-                if (!retVal.Furniture.empty())
-                    retVal.Furniture += ",";
-                retVal.Furniture += tag;
-                return true;
-            }
-            return false;
+            // ignore furniture
+	        return furniture.find(tag) != furniture.end();
         }
+
         static bool TryFillNarrative(SceneDetails& retVal, const std::string_view tag)
         {
             if (sceneNarrative.find(tag) != sceneNarrative.end())
@@ -393,6 +395,7 @@ namespace Proc
                     continue;
                 }
 
+                // TODO handle furniture in tags
                 if (TryFillSimples(retVal, tag))
                     continue;
 

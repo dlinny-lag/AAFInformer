@@ -21,9 +21,15 @@ namespace AAFTagsList
         /// </summary>
         private readonly Dictionary<string, List<ActorInfo>> animations = new Dictionary<string, List<ActorInfo>>();
         /// <summary>
-        /// Key - position name, value - animation or group name
+        /// Key - position name, value - animation or group name with location
         /// </summary>
-        private readonly Dictionary<string, string> positions = new Dictionary<string, string>();
+        private readonly Dictionary<string, PositionInfo> positions = new Dictionary<string, PositionInfo>();
+
+        /// <summary>
+        /// key - group name, value - list of furniture in group
+        /// </summary>
+        private readonly Dictionary<string, HashSet<FormId>> furnitureGroups = new Dictionary<string, HashSet<FormId>>();
+
         private readonly Dictionary<string, Exception> failedFiles = new Dictionary<string, Exception>();
         /// <summary>
         /// key - race, value - skeleton. populated when animation points to race, not to skeleton
@@ -44,6 +50,7 @@ namespace AAFTagsList
                 fi.Name.IndexOf("animationGroupData", StringComparison.CurrentCultureIgnoreCase) >= 0 ||
                 fi.Name.IndexOf("positionData", StringComparison.CurrentCultureIgnoreCase) >= 0 ||
                 fi.Name.IndexOf("raceData", StringComparison.CurrentCultureIgnoreCase) >= 0 ||
+                fi.Name.IndexOf("furnitureData", StringComparison.CurrentCultureIgnoreCase) >= 0 ||
                 fi.Name.IndexOf("tagData", StringComparison.CurrentCultureIgnoreCase) >= 0);
             process = Task.Factory.StartNew(Collect, TaskCreationOptions.LongRunning);
         }
@@ -68,6 +75,29 @@ namespace AAFTagsList
             }
         }
 
+        BaseDefaults GetBaseDefaults(XmlElement defaults)
+        {
+            BaseDefaults retVal = new BaseDefaults {ModName = "FALLOUT4.ESM" };
+            if (defaults == null)
+                return retVal;
+            foreach (XmlAttribute attr in defaults.Attributes)
+            {
+                if (attr.Name == "source")
+                {
+                    if (!string.IsNullOrWhiteSpace(attr.Value))
+                        retVal.ModName = attr.Value.ToUpperInvariant();
+                }
+                else if (attr.Name == "loadPriority")
+                {
+                    if (int.TryParse(attr.Value, NumberStyles.Integer, CultureInfo.InvariantCulture,
+                        out int loadPriority))
+                    {
+                        retVal.LoadPriority = loadPriority;
+                    }
+                }
+            }
+            return retVal;
+        }
         RaceDefaults GetRaceDefaults(XmlElement defaults)
         {
             RaceDefaults retVal = RaceDefaults.Default;
@@ -79,7 +109,7 @@ namespace AAFTagsList
                 if (attr.Name == "source")
                 {
                     if (!string.IsNullOrWhiteSpace(attr.Value))
-                        retVal.ModName = attr.Value;
+                        retVal.ModName = attr.Value.ToUpperInvariant();
                 }
                 else if (attr.Name == "skeleton")
                 {
@@ -107,12 +137,16 @@ namespace AAFTagsList
                 if (doc == null)
                     continue;
                 RaceDefaults defaults = RaceDefaults.Default;
+                BaseDefaults bDefaults = new BaseDefaults { LoadPriority = -1};
                 foreach (XmlNode root in doc)
                 {
                     foreach (XmlElement element in root)
                     {
                         if (element.Name == "defaults")
+                        {
+                            bDefaults = GetBaseDefaults(element);
                             defaults = GetRaceDefaults(element);
+                        }
                         else if (element.Name == "animation")
                             ProcessAnimationNode(element, file);
                         else if (element.Name == "animationGroup")
@@ -123,6 +157,8 @@ namespace AAFTagsList
                             ProcessRaceNode(element, defaults);
                         else if (element.Name == "tag")
                             ProcessTagNode(element);
+                        else if (element.Name == "group")
+                            ProcessFurnitureGroupNode(element, bDefaults);
 
                     }
                 }
@@ -197,7 +233,7 @@ namespace AAFTagsList
                 return; // failed to get form id
 
             // TODO: check for duplications
-            formSkeleton[new FormId(defaults.ModName, id, defaults.LoadPriority)] = skeleton;
+            formSkeleton[new FormId(defaults.ModName.ToUpperInvariant(), id, defaults.LoadPriority)] = skeleton;
         }
 
         void ProcessAnimationNode(XmlElement root, string fileName)
@@ -282,11 +318,45 @@ namespace AAFTagsList
             }
         }
 
+        private void ProcessFurnitureGroupNode(XmlElement root, BaseDefaults defaults)
+        {
+            if (!TryGetId(root, out string furnGroupId))
+                return;
+            furnGroupId = furnGroupId.ToUpperInvariant();
+            if (!furnitureGroups.TryGetValue(furnGroupId, out var furnList))
+            {
+                furnList = new HashSet<FormId>();
+                furnitureGroups[furnGroupId] = furnList;
+            }
+
+            foreach (XmlElement node in root)
+            {
+                if (node.Name == "furniture")
+                {
+                    int formId = -1;
+                    foreach (XmlAttribute attr in node.Attributes)
+                    {
+                        if (attr.Name == "form")
+                        {
+                            if (int.TryParse(attr.Value, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int parsed))
+                            {
+                                formId = parsed;
+                            }
+                        }
+                    }
+
+                    if (formId > 0)
+                        furnList.Add(new FormId(defaults.ModName, formId, defaults.LoadPriority));
+                }
+            }
+        }
+
         void ProcessPositionNode(XmlElement root)
         {
             string positionId = null;
             string animOrGroupId = null;
             string tagEntry = null;
+            string location = null;
             foreach (XmlAttribute attr in root.Attributes)
             {
                 if (attr.Name == "id")
@@ -305,6 +375,10 @@ namespace AAFTagsList
                 {
                     tagEntry = attr.Value;
                 }
+                else if (attr.Name == "location")
+                {
+                    location = attr.Value.ToUpperInvariant();
+                }
                 else if (attr.Name == "isHidden")
                 {
                     if (string.Compare(attr.Value, "true", StringComparison.InvariantCultureIgnoreCase) == 0)
@@ -320,15 +394,17 @@ namespace AAFTagsList
             {
                 if (positions.TryGetValue(positionId, out var curId))
                 {
-                    if (curId != animOrGroupId && curId != positionId)
+                    if (curId.GroupOrAnim != animOrGroupId && curId.GroupOrAnim != positionId)
                     {
                         // invalid duplication
                         //TODO: notify about problem
                     }
+
+                    curId.Locations.AddRange(PositionInfo.ParseLocations(location));
                 }
                 else
                 {
-                    positions.Add(positionId, animOrGroupId);
+                    positions.Add(positionId, new PositionInfo(animOrGroupId, location));
                     if (!string.IsNullOrWhiteSpace(tagEntry))
                     {
                         if (!allTags.TryGetValue(positionId, out var tagEntries))
@@ -350,6 +426,11 @@ namespace AAFTagsList
         public IDictionary<string, Exception> GetFailedFiles()
         {
             return failedFiles;
+        }
+
+        public IDictionary<string, HashSet<FormId>> GetFurniture()
+        {
+            return furnitureGroups;
         }
     }
 

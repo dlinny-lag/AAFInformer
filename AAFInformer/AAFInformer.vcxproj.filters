@@ -56,6 +56,7 @@
     <ClCompile Include="..\..\f4se\f4se\GameData.cpp">
       <Filter>f4se</Filter>
     </ClCompile>
+    <ClCompile Include="FurnitureCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PluginAPIExport.hpp" />
@@ -163,6 +164,8 @@
       <Filter>f4se</Filter>
     </ClInclude>
     <ClInclude Include="StringUtils.hpp" />
+    <ClInclude Include="FormId.hpp" />
+    <ClInclude Include="FurnitureCache.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="VersionInfo.rc" />

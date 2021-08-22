@@ -2,14 +2,26 @@
 
 namespace AAFTagsList
 {
-    class FormId : IComparable<FormId>
+    public class FormId : IComparable<FormId>
     {
         public FormId(string modeName, int id, int priority)
         {
-            ModName = modeName;
-            Id = id;
+            ModName = modeName.ToUpperInvariant();
+            Id = FixFormId(id);
             Priority = priority;
         }
+
+        private const int elsMask = 0x00000FFF;
+        private const int espMask = 0x00FFFFFF;
+        static int FixFormId(int formId)
+        {
+            int modId = formId >> 24;
+            if (modId != 0xFE) // esm and esp
+                return formId & espMask;
+            // esl
+            return formId & elsMask;
+        }
+
         public readonly string ModName;
         public readonly int Id;
         public readonly int Priority;

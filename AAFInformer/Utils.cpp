@@ -11,6 +11,8 @@ UInt32 Utils::GetSex(Actor* actor)
 	// AAF_GenderOverride_Female [KYWD:010121BC]
 
 	const ModInfo* info = (*g_dataHandler)->LookupModByName("AAF.esm");
+	if (info == nullptr)
+		return 0; // default
 	const UInt32 maleOverrideFormId = info->GetFormID(0x000121BB);
 	const UInt32 femaleOverrideFormId = info->GetFormID(0x000121BC);
 
@@ -28,8 +30,15 @@ UInt32 Utils::GetSex(Actor* actor)
 		}
 	}
 
-	if (const TESNPC* npc = static_cast<TESNPC*>(actor->baseForm))
+	if (const TESNPC* npc = DYNAMIC_CAST(actor->baseForm, TESForm, TESNPC))
 		return npc->actorData.flags & 1;
 	return 0; // default
 }
 
+UInt32 Utils::ActualFormId(const std::string& modName, UInt32 formId)
+{
+	const ModInfo* info = (*g_dataHandler)->LookupModByName(modName.c_str());
+	if (info == nullptr)
+		return 0; // invalid request
+	return info->GetFormID(formId);
+}

@@ -32,7 +32,7 @@ namespace AAFTagsList
             {
                 List<ActorInfo> infos = null;
                 string anim = null;
-                if (groups.TryGetValue(pair.Value, out var anims))
+                if (groups.TryGetValue(pair.Value.GroupOrAnim, out var anims))
                 {
                     anim = anims.FirstOrDefault(); // get the first animation. they must have same actors list
                     if (!string.IsNullOrWhiteSpace(anim))
@@ -41,7 +41,7 @@ namespace AAFTagsList
 
                 if (infos == null)
                 {
-                    if (!animations.TryGetValue(pair.Value, out infos)) // try to find animation
+                    if (!animations.TryGetValue(pair.Value.GroupOrAnim, out infos)) // try to find animation
                     {
                         animations.TryGetValue(pair.Key, out infos); // or use position as name of animation
                     }
@@ -85,7 +85,9 @@ namespace AAFTagsList
                 }
                 else
                     details.Tags = new string[0];
-                
+
+                details.Locations = pair.Value.Locations.ToArray();
+
                 retVal.Add(details);
             }
 

@@ -23,7 +23,12 @@ namespace AAFTagsList
             EnsureFinished();
             result = null;
             List<ActorInfo> retVal;
-            if (!positions.TryGetValue(positionId, out string groupOrAnimation))
+            string groupOrAnimation;
+            if (positions.TryGetValue(positionId, out var posInfo))
+            {
+                groupOrAnimation = posInfo.GroupOrAnim;
+            }
+            else
             {
                 groupOrAnimation = positionId;
             }

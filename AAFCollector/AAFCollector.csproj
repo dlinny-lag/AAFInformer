@@ -49,6 +49,12 @@
     <Compile Include="..\AAFTagsList\ActorType.cs">
       <Link>ActorType.cs</Link>
     </Compile>
+    <Compile Include="..\AAFTagsList\BaseDefaults.cs">
+      <Link>BaseDefaults.cs</Link>
+    </Compile>
+    <Compile Include="..\AAFTagsList\CollectionExtensions.cs">
+      <Link>CollectionExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\AAFTagsList\Extensions.cs">
       <Link>Extensions.cs</Link>
     </Compile>
@@ -57,6 +63,9 @@
     </Compile>
     <Compile Include="..\AAFTagsList\FormId.cs">
       <Link>FormId.cs</Link>
+    </Compile>
+    <Compile Include="..\AAFTagsList\PositionInfo.cs">
+      <Link>PositionInfo.cs</Link>
     </Compile>
     <Compile Include="..\AAFTagsList\RaceDefaults.cs">
       <Link>RaceDefaults.cs</Link>
@@ -69,6 +78,7 @@
     </Compile>
     <Compile Include="AAFScenes.Positions.cs" />
     <Compile Include="ActorInfo.GetType.cs" />
+    <Compile Include="FurnitureDetails.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="PositionDetails.cs" />
     <Compile Include="Program.cs" />

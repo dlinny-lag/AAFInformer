@@ -11,5 +11,6 @@ namespace AAFCollector
         public string Name;
         public ActorType[] Actors;
         public string[] Tags;
+        public string[] Locations;
     };
 }

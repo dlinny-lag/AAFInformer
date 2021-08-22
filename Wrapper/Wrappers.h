@@ -144,14 +144,6 @@ namespace Wrapper
 			}
 		}
 
-		property String^ Furniture
-		{
-			String^ get()
-			{
-				return msclr::interop::marshal_as<String^>(subject->Furniture);
-			}
-		}
-
 		property String^ Unparsed
 		{
 			String^ get()

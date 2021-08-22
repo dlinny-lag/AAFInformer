@@ -7,6 +7,7 @@
 
 #include "PositionsHolder.h"
 #include "StringUtils.hpp"
+#include "FurnitureCache.h"
 
 namespace PluginAPIExport
 {
@@ -17,8 +18,8 @@ namespace PluginAPIExport
 #undef AAF_INFO_EXPORT_PAPYRUS_SCRIPT
 
 	const char* pluginName = "AAFInformer";
-	UInt32 pluginVersionInt = 0x0056;
-	const char* pluginVersionString = "0.5.6";
+	const UInt32 pluginVersionInt = 0x0060;
+	const char* pluginVersionString = "0.6.0";
 	BSReadWriteLock dataLock;
 
 
@@ -62,7 +63,7 @@ namespace PluginAPIExport
 		ai.Set("IsOtherGiver", Proc::TagsProcessor::IsOtherGiver(scene, info));
 	}
 
-	bool InitSceneInfo(SceneInfo& retVal, const BSFixedString& name, const Proc::SceneDetails& scene)
+	bool InitSceneInfo(SceneInfo& retVal, const BSFixedString& name, const Proc::SceneDetails& scene, SInt32 furnitureFormId)
 	{
 		const BSFixedString sName(SceneInfo::StructName);
 		if (!(*g_gameVM)->m_virtualMachine->CreateStruct(&sName, &retVal.StructDataRef()))
@@ -76,7 +77,7 @@ namespace PluginAPIExport
 		retVal.Set("Narrative", BSFixedString(scene.Narrative.c_str()));
 		retVal.Set("Attributes", BSFixedString(scene.Attributes.c_str()));
 		retVal.Set("Service", BSFixedString(scene.Service.c_str()));
-		retVal.Set("Furn", BSFixedString(scene.Furniture.c_str()));
+		retVal.Set("FurnGroup", BSFixedString(FurnitureCache::GetFurnGroup(scene, furnitureFormId).c_str()));
 		retVal.Set("Unparsed", BSFixedString(scene.Unparsed.c_str()));
 
 		return true;
@@ -133,7 +134,7 @@ namespace PluginAPIExport
 	}
 
 
-	SceneInfo GetScene(StaticFunctionTag* _, BSFixedString name)
+	SceneInfo GetScene(StaticFunctionTag* _, BSFixedString name, SInt32 furnId)
 	{
 		SceneInfo retVal;
 		retVal.SetNone(true);
@@ -150,12 +151,12 @@ namespace PluginAPIExport
 			return retVal;
 		}
 
-		InitSceneInfo(retVal, name, ptr->second);
+		InitSceneInfo(retVal, name, ptr->second, furnId);
 
 		return retVal;
 	}
 
-	SceneInfo GetSceneAndActors(StaticFunctionTag* _, BSFixedString name, VMArray<Actor*> actors, VMArray<ActorInfo> outVal)
+	SceneInfo GetSceneAndActors(StaticFunctionTag* _, BSFixedString name, VMArray<Actor*> actors, VMArray<ActorInfo> outVal, SInt32 furnId)
 	{
 		SceneInfo retVal;
 		retVal.SetNone(true);
@@ -211,7 +212,7 @@ namespace PluginAPIExport
 			SetActorInfoFields(ai, actor, infos[i], ptr->second);
 		}
 
-		InitSceneInfo(retVal, name, ptr->second);
+		InitSceneInfo(retVal, name, ptr->second, furnId);
 		return retVal;
 	}
 
@@ -230,11 +231,11 @@ namespace PluginAPIExport
 		vm->SetFunctionFlags(EXPORT_PAPYRUS_SCRIPT, "GetActors", IFunction::kFunctionFlag_NoWait);
 
 		vm->RegisterFunction(
-			new NativeFunction1("GetScene", EXPORT_PAPYRUS_SCRIPT, GetScene, vm));
+			new NativeFunction2("GetScene", EXPORT_PAPYRUS_SCRIPT, GetScene, vm));
 		vm->SetFunctionFlags(EXPORT_PAPYRUS_SCRIPT, "GetScene", IFunction::kFunctionFlag_NoWait);
 
 		vm->RegisterFunction(
-			new NativeFunction3("GetSceneAndActors", EXPORT_PAPYRUS_SCRIPT, GetSceneAndActors, vm));
+			new NativeFunction4("GetSceneAndActors", EXPORT_PAPYRUS_SCRIPT, GetSceneAndActors, vm));
 		vm->SetFunctionFlags(EXPORT_PAPYRUS_SCRIPT, "GetSceneAndActors", IFunction::kFunctionFlag_NoWait);
 
 		return true;

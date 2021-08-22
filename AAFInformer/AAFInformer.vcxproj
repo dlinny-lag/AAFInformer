@@ -123,6 +123,7 @@
     <ClCompile Include="..\..\f4se\f4se\PapyrusVM.cpp" />
     <ClCompile Include="..\..\f4se\f4se_common\Relocation.cpp" />
     <ClCompile Include="..\..\f4se\f4se_common\Utilities.cpp" />
+    <ClCompile Include="FurnitureCache.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PositionsHolder.cpp" />
     <ClCompile Include="TagsProcessor.cpp" />
@@ -158,7 +159,9 @@
     <ClInclude Include="Authors.hpp" />
     <ClInclude Include="Contact.hpp" />
     <ClInclude Include="ContactFix.hpp" />
+    <ClInclude Include="FormId.hpp" />
     <ClInclude Include="Furniture.hpp" />
+    <ClInclude Include="FurnitureCache.h" />
     <ClInclude Include="Narrative.hpp" />
     <ClInclude Include="PositionDetails.hpp" />
     <ClInclude Include="PositionDetailsSerializer.hpp" />

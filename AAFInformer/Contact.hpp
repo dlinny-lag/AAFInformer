@@ -17,7 +17,7 @@ namespace Parsing
 		FromMouth,
 		FromTongue,
 		FromOvipos,
-		// depends in TagActorType
+		// depends in ActorType
 		FromPenis,
 		FromVagina,
 		FromStrapon,
@@ -32,7 +32,7 @@ namespace Parsing
 		ToHand,
 		ToMouth,
 		ToNipples,
-		// depends on TagActorType
+		// depends on ActorType
 		ToPenis,
 		ToVagina,
 		ToStrapon,

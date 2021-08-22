@@ -277,6 +277,33 @@ namespace AAFTagsList
 
             Console.WriteLine();
             Console.WriteLine("=========================");
+            Console.WriteLine("Furniture:");
+            HashSet<FormId> allFurniture = new HashSet<FormId>();
+            List<string> duplicates = new List<string>();
+            var collected = scenesInfos.GetFurniture();
+            foreach (var pair in collected)
+            {
+                Console.WriteLine(pair.Key);
+                foreach (FormId formId in pair.Value)
+                {
+                    if (!allFurniture.Add(formId))
+                        duplicates.Add(formId.ToString());
+                    Console.WriteLine($"  {formId}");
+                }
+            }
+
+            if (duplicates.Count > 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Furniture declared in multiple groups:");
+                foreach (string dup in duplicates)
+                {
+                    Console.WriteLine(dup);
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("=========================");
             var map = scenesInfos.RaceSkeletonMap();
             foreach (var pair in map)
             {

@@ -50,7 +50,16 @@ namespace AAFCollector
 
             AAFScenes collector = new AAFScenes(aafFolder);
             PositionDetails[] data = collector.Collect(out var messages);
-
+            List<FurnitureDetails> furniture = new List<FurnitureDetails>(100);
+            foreach (var pair in collector.GetFurniture())
+            {
+                var fd = new FurnitureDetails
+                {
+                    FurnGroupName = pair.Key, 
+                    FurnitureList = pair.Value.ToArray()
+                };
+                furniture.Add(fd);
+            }
             if (false)
             {
                 if (messages.Count > 0)
@@ -69,7 +78,7 @@ namespace AAFCollector
                 return 1;
             }
 
-            int result = Serializer.Save(fi.FullName, data, messages.ToArray());
+            int result = Serializer.Save(fi.FullName, data, furniture.ToArray(), messages.ToArray());
             if (result < 0)
                 return result-10;
 

@@ -9,5 +9,6 @@ namespace Proc
 		std::string Name;
 		std::vector<AAFXML::ActorType> Actors;
 		std::vector<std::string> Tags;
+		std::vector<std::string> Locations;
 	};
 };

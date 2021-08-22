@@ -47,7 +47,11 @@ namespace Proc
 		for (auto& pos : positions)
 		{
 			_MESSAGE("%s", pos.Name.c_str());
-			SceneDetails details = TagsCategorizer::GetSceneDetails(pos.Actors, pos.Tags);
+			for (const auto& loc : pos.Locations)
+			{
+				_MESSAGE(" %s", loc.c_str());
+			}
+			SceneDetails details = TagsCategorizer::GetSceneDetails(pos.Actors, pos.Locations, pos.Tags);
 			PositionsHolder::Positions.insert(std::make_pair(pos.Name, details));
 		}
 	}
@@ -82,11 +86,14 @@ namespace Proc
 		_MESSAGE("Loading collected XML data");
 
 		std::vector<PositionDetails> positions;
-		if (!PositionDetailsSerializer::LoadAndDelete(exchangePath, positions))
+		std::unordered_map<std::string, std::vector<FormId>> furniture;
+		if (!PositionDetailsSerializer::LoadAndDelete(exchangePath, positions, furniture))
 		{
 			_ERROR("Failed to read exchange file %s.", exchangePath.c_str());
 			return -2; // assuming that log file was not created
 		}
+
+		PositionsHolder::FurnitureGroups = furniture;
 		FillPositions(positions);
 		const std::string logFile = exchangePath + ".log";
 		const std::vector<std::string> messages = PositionDetailsSerializer::LoadAndDeleteMessages(logFile);
@@ -109,6 +116,7 @@ namespace Proc
 
 #pragma region public
 	std::unordered_map<std::string, SceneDetails> PositionsHolder::Positions;
+	std::unordered_map<std::string, std::vector<FormId>> PositionsHolder::FurnitureGroups;
 
 	bool PositionsHolder::StartXmlParsing()
 	{

@@ -1,14 +1,11 @@
 ﻿namespace AAFTagsList
 {
-    class RaceDefaults
+    class RaceDefaults : BaseDefaults
     {
-        public string ModName;
         public string Skeleton;
-        public int LoadPriority;
         /// <summary>
         /// separate instance. can be mutated
         /// </summary>
-        public static RaceDefaults Default =>
-            new RaceDefaults { ModName = "Fallout4.esm", Skeleton = "Human" };
+        public static RaceDefaults Default => new RaceDefaults {Skeleton = "Human" };
     }
 }
