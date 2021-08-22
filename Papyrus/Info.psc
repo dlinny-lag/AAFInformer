@@ -111,7 +111,7 @@ Struct ActorInfo
     int IsButtTaker 
     int IsNippleTaker
 
-    int IsOviposGiver
+    int IsOtherGiver ; Ovipov or Strapon
 
     ; user defined data, not populated by API
     ; just to avoid necessity to copy this structure content

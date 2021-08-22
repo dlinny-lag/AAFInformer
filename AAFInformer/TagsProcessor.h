@@ -39,7 +39,7 @@ namespace Proc
 		UInt32 static IsButtTaker(const SceneDetails&, const ActorInfo&);
 		UInt32 static IsNippleTaker(const SceneDetails&, const ActorInfo&);
 
-		UInt32 static IsOviposGiver(const SceneDetails&, const ActorInfo&);
+		UInt32 static IsOtherGiver(const SceneDetails&, const ActorInfo&);
 
 		bool static FillActors(const SceneDetails& scene, VMArray<Actor*> actors, std::vector<Proc::ActorInfo>& outVal);
 	};

@@ -17,8 +17,8 @@ namespace PluginAPIExport
 #undef AAF_INFO_EXPORT_PAPYRUS_SCRIPT
 
 	const char* pluginName = "AAFInformer";
-	UInt32 pluginVersionInt = 0x0055;
-	const char* pluginVersionString = "0.5.5";
+	UInt32 pluginVersionInt = 0x0056;
+	const char* pluginVersionString = "0.5.6";
 	BSReadWriteLock dataLock;
 
 
@@ -59,7 +59,7 @@ namespace PluginAPIExport
 		ai.Set("IsButtTaker", Proc::TagsProcessor::IsButtTaker(scene, info));
 		ai.Set("IsNippleTaker", Proc::TagsProcessor::IsNippleTaker(scene, info));
 
-		ai.Set("IsOviposGiver", Proc::TagsProcessor::IsOviposGiver(scene, info));
+		ai.Set("IsOtherGiver", Proc::TagsProcessor::IsOtherGiver(scene, info));
 	}
 
 	bool InitSceneInfo(SceneInfo& retVal, const BSFixedString& name, const Proc::SceneDetails& scene)

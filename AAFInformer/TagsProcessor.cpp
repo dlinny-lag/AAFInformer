@@ -190,12 +190,13 @@ namespace Proc
 		}
 		return retVal;
 	}
-	UInt32 TagsProcessor::IsOviposGiver(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsOtherGiver(const SceneDetails& scene, const ActorInfo& actor)
 	{
 		int retVal = 0;
+		auto p = fixedFromPenis.find(actor.Type);
 		for (const From f : actor.From)
 		{
-			retVal += f == FromOvipos;
+			retVal += f == FromOvipos || f == FromStrapon || (p != fixedFromPenis.end() && (p->second == FromOvipos || p->second == FromStrapon));
 		}
 		return retVal;
 	}
