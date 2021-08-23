@@ -84,6 +84,7 @@ Struct ActorInfo
     Actor Participant
     int Index
     int Type ; actor's type. see constants above
+    int Position ; actor's position see contstants above
 
     ; numeric attributes
     int HeldLevel ; [0,9], 0 - free, 9 - max restrained
@@ -112,6 +113,8 @@ Struct ActorInfo
     int IsNippleTaker
 
     int IsOtherGiver ; Ovipov or Strapon
+
+    int SceneType ; to simplify further data storage
 
     ; user defined data, not populated by API
     ; just to avoid necessity to copy this structure content

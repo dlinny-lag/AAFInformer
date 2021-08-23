@@ -18,8 +18,8 @@ namespace PluginAPIExport
 #undef AAF_INFO_EXPORT_PAPYRUS_SCRIPT
 
 	const char* pluginName = "AAFInformer";
-	const UInt32 pluginVersionInt = 0x0060;
-	const char* pluginVersionString = "0.6.0";
+	const UInt32 pluginVersionInt = 0x0061;
+	const char* pluginVersionString = "0.6.1";
 	BSReadWriteLock dataLock;
 
 
@@ -39,6 +39,7 @@ namespace PluginAPIExport
 		ai.Set("Participant", info.Participant);
 		ai.Set("Index", info.Index);
 		ai.Set("Type", static_cast<SInt32>(info.Type));
+		ai.Set("Position", static_cast<SInt32>(info.Position));
 		ai.Set("HeldLevel", info.HeldLevel);
 		ai.Set("StimLevel", info.StimLevel);
 		ai.Set("LoveLevel", info.LoveLevel);
@@ -61,6 +62,8 @@ namespace PluginAPIExport
 		ai.Set("IsNippleTaker", Proc::TagsProcessor::IsNippleTaker(scene, info));
 
 		ai.Set("IsOtherGiver", Proc::TagsProcessor::IsOtherGiver(scene, info));
+
+		ai.Set("SceneType", static_cast<SInt32>(scene.Type));
 	}
 
 	bool InitSceneInfo(SceneInfo& retVal, const BSFixedString& name, const Proc::SceneDetails& scene, SInt32 furnitureFormId)
