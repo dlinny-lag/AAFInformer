@@ -1,8 +1,10 @@
+#include "common/IPrefix.h"
 #include "PositionsHolder.h"
 #include "Shlwapi.h"
 #include <shlobj.h>
 
 #include "PositionDetailsSerializer.hpp"
+#include "ExeFileInfo.h"
 
 namespace Proc
 {
@@ -121,11 +123,9 @@ namespace Proc
 	bool PositionsHolder::StartXmlParsing()
 	{
 		collectorPath = GetCollectorPath();
-		if (PathFileExists(collectorPath.c_str()) != TRUE)
-		{
-			_ERROR("Couldn't find AAFCollector.exe");
+
+		if (!FileInfo::ValidateFile(collectorPath))
 			return false;
-		}
 
 		char myDocs[MAX_PATH];
 

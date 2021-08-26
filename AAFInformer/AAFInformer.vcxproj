@@ -66,6 +66,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ForcedIncludeFiles>common/IPrefix.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -88,9 +90,11 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DebugInformationFormat>None</DebugInformationFormat>
       <ForcedIncludeFiles>common/IPrefix.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -123,6 +127,8 @@
     <ClCompile Include="..\..\f4se\f4se\PapyrusVM.cpp" />
     <ClCompile Include="..\..\f4se\f4se_common\Relocation.cpp" />
     <ClCompile Include="..\..\f4se\f4se_common\Utilities.cpp" />
+    <ClCompile Include="blake2b-ref.cpp" />
+    <ClCompile Include="ExeFileInfo.cpp" />
     <ClCompile Include="FurnitureCache.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PositionsHolder.cpp" />
@@ -157,8 +163,11 @@
     <ClInclude Include="ActorTypeDefs.hpp" />
     <ClInclude Include="ActorTypeNames.hpp" />
     <ClInclude Include="Authors.hpp" />
+    <ClInclude Include="blake2-impl.h" />
+    <ClInclude Include="blake2.h" />
     <ClInclude Include="Contact.hpp" />
     <ClInclude Include="ContactFix.hpp" />
+    <ClInclude Include="ExeFileInfo.h" />
     <ClInclude Include="FormId.hpp" />
     <ClInclude Include="Furniture.hpp" />
     <ClInclude Include="FurnitureCache.h" />

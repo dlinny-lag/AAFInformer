@@ -57,6 +57,10 @@
       <Filter>f4se</Filter>
     </ClCompile>
     <ClCompile Include="FurnitureCache.cpp" />
+    <ClCompile Include="ExeFileInfo.cpp" />
+    <ClCompile Include="blake2b-ref.cpp">
+      <Filter>blake2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PluginAPIExport.hpp" />
@@ -166,6 +170,13 @@
     <ClInclude Include="StringUtils.hpp" />
     <ClInclude Include="FormId.hpp" />
     <ClInclude Include="FurnitureCache.h" />
+    <ClInclude Include="ExeFileInfo.h" />
+    <ClInclude Include="blake2.h">
+      <Filter>blake2</Filter>
+    </ClInclude>
+    <ClInclude Include="blake2-impl.h">
+      <Filter>blake2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="VersionInfo.rc" />
@@ -182,6 +193,9 @@
     </Filter>
     <Filter Include="TagsCategories">
       <UniqueIdentifier>{71a683ff-b655-4748-b92b-f151f39a1f07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blake2">
+      <UniqueIdentifier>{4f6a9343-e68e-4bd9-a846-ae458f7aabc0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
