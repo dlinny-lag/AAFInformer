@@ -24,20 +24,22 @@ namespace Proc
 		return -scene.DomLevel;
 	}
 
-	constexpr From stimFrom[] = { Proc::FromPenis , Proc::FromVagina, Proc::FromMouth, Proc::FromTongue }; // is stimulation applied to giver?
-	bool inline IsStim(Proc::From from)
+	bool inline IsGiverStim(Proc::From from, Proc::ActorType type)
 	{
-		for (size_t i = 0; i < sizeof(stimFrom)/sizeof(Proc::From); i++)
-		{
-			if (from == stimFrom[i])
-				return true;
-		}
-		return false;
+		if (from == FromPenis || from == FromVagina)
+			return true;
+
+		const auto p = fixedFromPenis.find(type);
+		if (p != fixedFromPenis.end() && p->second == FromPenis)
+			return true;
+		const auto v = fixedFromVagina.find(type);
+		return v != fixedFromVagina.end() && v->second == FromVagina;
 	}
 	SInt32 inline StimLevel(const SceneDetails& scene, const ActorInfo& actor)
 	{
-		if (std::any_of(actor.From.begin(), actor.From.end(), IsStim))
-			return scene.StimLevel; // actor actively stimulate
+		const Proc::ActorType type = actor.Type;
+		if (std::any_of(actor.From.begin(), actor.From.end(), [type](auto f) {return IsGiverStim(f, type);}))
+			return scene.StimLevel < 0 ? -scene.StimLevel: scene.StimLevel; // actor actively stimulate. without pain
 
 		if (actor.To.empty())
 			return 0; // nothing stimulates actor

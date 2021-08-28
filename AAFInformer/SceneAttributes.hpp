@@ -7,6 +7,8 @@ namespace Parsing
 	{
 		"ANAL",
 		"BOUND",
+		"DEATH",
+		"TEASE",
 		"CAUGHT",
 		"CUFFED",
 		"FEMDOM",
@@ -20,7 +22,6 @@ namespace Parsing
 		"POUNDING",
 		"SPOONING",
 		"STANDING",
-		"STRANGLED",
 		"ELECTROCUTED",
 		"PERPENDICULAR",
 		"LEFTHANDTOBUTT",
