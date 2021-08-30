@@ -22,7 +22,6 @@ namespace Parsing
 		"POUNDING",
 		"SPOONING",
 		"STANDING",
-		"ELECTROCUTED",
 		"PERPENDICULAR",
 		"LEFTHANDTOBUTT",
 	};

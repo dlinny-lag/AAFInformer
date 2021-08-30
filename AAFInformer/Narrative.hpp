@@ -41,6 +41,7 @@ namespace Parsing
 		"MISSIONARY",
 		"SCISSORING",
 		"CUNNILINGUS",
+		"ELECTROCUTED",
 		"MASTURBATION",
 	};
 }

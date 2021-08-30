@@ -50,11 +50,14 @@ namespace AAFTagsList
             ConcurrentDictionary<string, Exception> failedFiles = new ConcurrentDictionary<string, Exception>();
             ConcurrentDictionary<string, object> unparsedTags = new ConcurrentDictionary<string, object>();
 
+            ConcurrentDictionary<string, HashSet<string>> narratives = new ConcurrentDictionary<string, HashSet<string>>();
+
             TagExtractor.OnTags += (fileName, id, tagsLine) =>
             {
                 ParseTags(tagsLine, foundTags);
 
                 SceneDetails report = TagsCategorizer.Categorize(tagsLine);
+                
                 if (!string.IsNullOrWhiteSpace(report.Unparsed) || report.Warnings.Length > 0)
                 {
                     StringBuilder sb = new StringBuilder();
@@ -99,6 +102,16 @@ namespace AAFTagsList
                     {
                         allPositions[id] = report.Actors;
                     }
+                }
+
+                lock (narratives)
+                {
+                    if (!narratives.TryGetValue(id, out var narList))
+                    {
+                        narList = new HashSet<string>();
+                        narratives[id] = narList;
+                    }
+                    narList.AddRange(report.Narrative.Split(',',StringSplitOptions.RemoveEmptyEntries));
                 }
             };
 
@@ -317,6 +330,20 @@ namespace AAFTagsList
             Console.WriteLine(mapDef);
             Console.WriteLine("====Papyrus");
             Console.WriteLine(papyrus);
+
+            Console.WriteLine("");
+            Console.WriteLine("=== Narrative issues:");
+            foreach (var pair in narratives)
+            {
+                if (pair.Value.Count == 0)
+                {
+                    Console.WriteLine($"{pair.Key}: No narrative");
+                }
+                if (pair.Value.Count > 1)
+                {
+                    Console.WriteLine($"{pair.Key}: {string.Join(',', pair.Value)}");
+                }
+            }
         }
     }
 }
