@@ -54,8 +54,8 @@ int property SupermutantBehemoth = 161 autoreadonly
 int property Loving = -1 autoreadonly
 int property Neutral = 0 autoreadonly
 int property Rough = 1 autoreadonly
-int property Aggressive = 1 autoreadonly
-int property RoughAggressive = 2 autoreadonly
+int property Aggressive = 2 autoreadonly
+int property RoughAggressive = 3 autoreadonly
 
 
 ; actor position

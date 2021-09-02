@@ -238,7 +238,10 @@ namespace Proc
             auto iter = sceneTypesMap.find(tag);
             if (iter != sceneTypesMap.end())
             {
-                retVal.Type += iter->second;
+                if (retVal.Type >= 0 && iter->second >= 0)
+					retVal.Type |= iter->second;
+                else // Loving
+                    retVal.Type = iter->second; 
                 return true;
             }
             return false;

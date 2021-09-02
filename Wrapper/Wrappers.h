@@ -200,7 +200,7 @@ namespace Wrapper
 				cli::array<Wrapper::ActorPosition>^ retVal = gcnew cli::array<Wrapper::ActorPosition>(int(subject->Positions.size()));
 				for (int i = 0; i < subject->Positions.size(); i++)
 				{
-					retVal[i] = Wrapper::ActorPosition(subject->Actors[i]);
+					retVal[i] = Wrapper::ActorPosition(subject->Positions[i]);
 				}
 				return retVal;
 			}

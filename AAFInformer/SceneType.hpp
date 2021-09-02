@@ -15,11 +15,10 @@ namespace Parsing
 		RoughAndAggressive = 3
 	};
 
-	static SceneType& operator +=(SceneType& self, const SceneType& b)
+	static SceneType& operator |=(SceneType& self, const SceneType& b)
 	{
-		return self = static_cast<SceneType>(self + b);
+		return self = static_cast<SceneType>(self | b);
 	}
-
 	const std::unordered_map<std::string_view, const SceneType> sceneTypesMap =
 	{
 		{"LOVING", SceneType::Loving},
