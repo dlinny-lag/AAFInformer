@@ -120,12 +120,14 @@ namespace Proc
 	UInt32 TagsProcessor::IsGenitalGiver(const SceneDetails& scene, const ActorInfo& actor)
 	{
 		int retVal = 0;
+		auto p = fixedFromPenis.find(actor.Type);
+		auto v = fixedFromVagina.find(actor.Type);
+		auto s = fixedFromStrapon.find(actor.Type);
 		for (const From f : actor.From)
 		{
-			auto p = fixedFromPenis.find(actor.Type);
-			retVal += p != fixedFromPenis.end() && p->second == FromPenis;
-			auto v = fixedFromVagina.find(actor.Type);
-			retVal += v != fixedFromVagina.end() && v->second == FromVagina;
+			retVal += f == FromPenis && p != fixedFromPenis.end() && p->second == FromPenis;
+			retVal += f == FromVagina && v != fixedFromVagina.end() && v->second == FromVagina;
+			retVal += f == FromStrapon && v != fixedFromStrapon.end() && s->second == FromPenis;
 		}
 		return retVal;
 	}
