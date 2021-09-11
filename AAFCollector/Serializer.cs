@@ -71,7 +71,17 @@ namespace AAFCollector
             }
         }
 
-        public static int Save(string dstFile, PositionDetails[] positions, FurnitureDetails[] furniture, string[] messages)
+        static void SaveTreeFirstPositionMap(Stream stream, IDictionary<string, string> map)
+        {
+            stream.WriteInt(map.Count);
+            foreach (var pair in map)
+            {
+                stream.WriteString(pair.Key);
+                stream.WriteString(pair.Value);
+            }
+        }
+
+        public static int Save(string dstFile, PositionDetails[] positions, FurnitureDetails[] furniture, IDictionary<string, string> treeFirstPositionMap, string[] messages)
         {
             try
             {
@@ -79,6 +89,7 @@ namespace AAFCollector
                 {
                     SavePositions(stream, positions);
                     SaveFurniture(stream, furniture);
+                    SaveTreeFirstPositionMap(stream, treeFirstPositionMap);
                 }
             }
             catch (Exception)

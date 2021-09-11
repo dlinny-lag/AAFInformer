@@ -1,11 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Xml;
 
 namespace AAFTagsList
 {
+
+    class LoadException : Exception
+    {
+        public LoadException(string xmlContent, Exception inner) :base(xmlContent, inner)
+        {
+
+        }
+
+    }
+
     class XmlFileLoader
     {
         private const string FakeRoot = "fake_root";
@@ -93,7 +104,8 @@ namespace AAFTagsList
                 {
                     return LoadString(FixComments(content));
                 }
-                throw;
+                                
+                throw new LoadException(content, ex);
             }
         }
 

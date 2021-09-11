@@ -75,10 +75,14 @@ namespace AAFCollector
                     Console.WriteLine($"{details.Name}:[{string.Join("_", details.Actors)}] Tags={string.Join(",", details.Tags)}");
                 }
 
+                foreach (var pair in collector.GetTreeFirstPositionMap())
+                {
+                    Console.WriteLine($"{pair.Key} -> {pair.Value}");
+                }
                 return 1;
             }
 
-            int result = Serializer.Save(fi.FullName, data, furniture.ToArray(), messages.ToArray());
+            int result = Serializer.Save(fi.FullName, data, furniture.ToArray(), collector.GetTreeFirstPositionMap(), messages.ToArray());
             if (result < 0)
                 return result-10;
 

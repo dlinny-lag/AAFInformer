@@ -223,6 +223,19 @@ namespace AAFTagsList
             Console.WriteLine($"No Animation: {summary[SearchIssue.NoAnimationFound].Count}");
             Console.WriteLine($"No actors: {summary[SearchIssue.NoAnyActorFound].Count}");
 
+            if (summary[SearchIssue.NoGroupOrAnimationFound].Count > 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine("=========================");
+                Console.WriteLine("Positions without animation:");
+                List<string> positions = new List<string>(summary[SearchIssue.NoGroupOrAnimationFound]);
+                positions.Sort();
+                foreach (string pos in positions)
+                {
+                    Console.WriteLine(pos);
+                }
+            }
+
             if (suggestions.Count > 0)
             {
                 Console.WriteLine();

@@ -89,7 +89,8 @@ namespace Proc
 
 		std::vector<PositionDetails> positions;
 		std::unordered_map<std::string, std::vector<FormId>> furniture;
-		if (!PositionDetailsSerializer::LoadAndDelete(exchangePath, positions, furniture))
+		std::unordered_map<std::string, std::string> treeFirstPositionMap;
+		if (!PositionDetailsSerializer::LoadAndDelete(exchangePath, positions, furniture, treeFirstPositionMap))
 		{
 			_ERROR("Failed to read exchange file %s.", exchangePath.c_str());
 			return -2; // assuming that log file was not created
@@ -97,6 +98,12 @@ namespace Proc
 
 		PositionsHolder::FurnitureGroups = furniture;
 		FillPositions(positions);
+		// log tree mapping
+		for (const auto& ptr : treeFirstPositionMap)
+		{
+			_MESSAGE("%s->%s", ptr.first.c_str(), ptr.second.c_str());
+		}
+		PositionsHolder::TreeFirstPositionMap = treeFirstPositionMap;
 		const std::string logFile = exchangePath + ".log";
 		const std::vector<std::string> messages = PositionDetailsSerializer::LoadAndDeleteMessages(logFile);
 		for (auto& m : messages)
@@ -119,6 +126,7 @@ namespace Proc
 #pragma region public
 	std::unordered_map<std::string, SceneDetails> PositionsHolder::Positions;
 	std::unordered_map<std::string, std::vector<FormId>> PositionsHolder::FurnitureGroups;
+	std::unordered_map<std::string, std::string> PositionsHolder::TreeFirstPositionMap;
 
 	bool PositionsHolder::StartXmlParsing()
 	{

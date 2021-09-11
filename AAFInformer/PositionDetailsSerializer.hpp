@@ -144,10 +144,43 @@ namespace Proc
 			return true;
 		}
 
-		// See AAFCollector.Serializer.Save() implementation
-		static bool LoadAndDelete(const std::string& src, std::vector<PositionDetails>& outVal, std::unordered_map<std::string, std::vector<FormId>>& furniture)
+		static bool ReadTreeFirstPositionMap(HANDLE theFile, std::unordered_map<std::string, std::string>& treeFirstPositionMap)
 		{
-			HANDLE theFile = CreateFile(src.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+			DWORD bytesRead;
+			SInt32 nMapSize;
+			if (!ReadFile(theFile, &nMapSize, sizeof(nMapSize), &bytesRead, NULL) || nMapSize < 0)
+			{
+				CloseHandle(theFile);
+				return false;
+			}
+
+			for (int i = 0; i < nMapSize; i++)
+			{
+				std::string treeId;
+				if (!ReadString(theFile, treeId))
+				{
+					CloseHandle(theFile);
+					return false;
+				}
+				std::string firstPositionId;
+				if (!ReadString(theFile, firstPositionId))
+				{
+					CloseHandle(theFile);
+					return false;
+				}
+				treeFirstPositionMap.insert(std::make_pair(treeId, firstPositionId));
+			}
+			return true;
+		}
+
+		// See AAFCollector.Serializer.Save() implementation
+		static bool LoadAndDelete(const std::string& src, 
+			std::vector<PositionDetails>& outVal,
+			std::unordered_map<std::string,
+			std::vector<FormId>>& furniture,
+			std::unordered_map<std::string, std::string>& treeFirstPositionMap )
+		{
+			const HANDLE theFile = CreateFile(src.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 			if (theFile == INVALID_HANDLE_VALUE)
 				return false;
 
@@ -156,6 +189,8 @@ namespace Proc
 				return false; // handle is closed. file alive for analysis
 			if (!ReadFurniture(theFile, furniture))
 				return false; // handle is close. file alive for analysis
+			if (!ReadTreeFirstPositionMap(theFile, treeFirstPositionMap))
+				return false; 
 			CloseHandle(theFile);
 			DeleteFile(src.c_str());
 			return true;

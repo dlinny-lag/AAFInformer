@@ -24,21 +24,9 @@ namespace Proc
 		return -scene.DomLevel;
 	}
 
-	bool inline IsGiverStim(Proc::From from, Proc::ActorType type)
-	{
-		if (from == FromPenis || from == FromVagina)
-			return true;
-
-		const auto p = fixedFromPenis.find(type);
-		if (p != fixedFromPenis.end() && p->second == FromPenis)
-			return true;
-		const auto v = fixedFromVagina.find(type);
-		return v != fixedFromVagina.end() && v->second == FromVagina;
-	}
 	SInt32 inline StimLevel(const SceneDetails& scene, const ActorInfo& actor)
 	{
-		const Proc::ActorType type = actor.Type;
-		if (std::any_of(actor.From.begin(), actor.From.end(), [type](auto f) {return IsGiverStim(f, type);}))
+		if (TagsProcessor::IsGenitalGiver(scene, actor))
 			return scene.StimLevel < 0 ? -scene.StimLevel: scene.StimLevel; // actor actively stimulate. without pain
 
 		if (actor.To.empty())

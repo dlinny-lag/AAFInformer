@@ -43,12 +43,15 @@ namespace AAFTagsList
         /// </summary>
         private readonly Dictionary<string, List<string>> allTags = new Dictionary<string, List<string>>();
 
+        private readonly Dictionary<string, string> firstBranchInTree = new Dictionary<string, string>();
+
         public AAFScenes(string xmlFolder)
         {
             files = new FilesIterator(xmlFolder, fi =>
                 fi.Name.IndexOf("animationData", StringComparison.InvariantCultureIgnoreCase) >= 0 ||
                 fi.Name.IndexOf("animationGroupData", StringComparison.CurrentCultureIgnoreCase) >= 0 ||
                 fi.Name.IndexOf("positionData", StringComparison.CurrentCultureIgnoreCase) >= 0 ||
+                fi.Name.IndexOf("positionTreeData", StringComparison.CurrentCultureIgnoreCase) >= 0 ||
                 fi.Name.IndexOf("raceData", StringComparison.CurrentCultureIgnoreCase) >= 0 ||
                 fi.Name.IndexOf("furnitureData", StringComparison.CurrentCultureIgnoreCase) >= 0 ||
                 fi.Name.IndexOf("tagData", StringComparison.CurrentCultureIgnoreCase) >= 0);
@@ -67,6 +70,13 @@ namespace AAFTagsList
             try
             {
                 return XmlFileLoader.LoadString(content);
+            }
+            catch (LoadException lex)
+            {
+                FileInfo filePath = new FileInfo(file);
+                File.WriteAllText(Path.Combine(Environment.CurrentDirectory, filePath.Name), lex.Message);
+                failedFiles.Add(file, lex.InnerException);
+                return null;
             }
             catch (Exception ex)
             {
@@ -159,6 +169,8 @@ namespace AAFTagsList
                             ProcessTagNode(element);
                         else if (element.Name == "group")
                             ProcessFurnitureGroupNode(element, bDefaults);
+                        else if (element.Name == "tree")
+                            ProcessTreeNode(element);
 
                     }
                 }
@@ -178,6 +190,40 @@ namespace AAFTagsList
             }
 
             return false;
+        }
+
+        void ProcessTreeNode(XmlElement root)
+        {
+            if (!TryGetId(root, out string treeId))
+                return; // ignore invalid tree node
+            foreach (XmlElement node in root)
+            {
+                if (node.Name == "branch")
+                {
+                    string positionId = null;
+                    foreach (XmlAttribute attribute in node.Attributes)
+                    {
+                        if (string.Compare(attribute.Name, "positionID", StringComparison.InvariantCultureIgnoreCase) != 0) 
+                            continue;
+                        positionId = attribute.Value.ToUpperInvariant();
+                        break;
+                    }
+                    if (string.IsNullOrWhiteSpace(positionId))
+                        continue; // ignore invalid branch node
+
+                    if (firstBranchInTree.TryGetValue(treeId, out string existing))
+                    {
+                        if (positionId != existing)
+                        {
+                            // TODO: notify about duplication
+                        }
+                    }
+                    else
+                        firstBranchInTree.Add(treeId.ToUpperInvariant(), positionId);
+
+                    break;
+                }
+            }
         }
 
         void ProcessTagNode(XmlElement root)
@@ -381,8 +427,10 @@ namespace AAFTagsList
                 }
                 else if (attr.Name == "isHidden")
                 {
-                    if (string.Compare(attr.Value, "true", StringComparison.InvariantCultureIgnoreCase) == 0)
-                        return; // position is hidden and can not be used in animations?
+                    //if (string.Compare(attr.Value, "true", StringComparison.InvariantCultureIgnoreCase) == 0)
+                    //    return; // position is hidden and can not be used in animations?
+                    // UPD: even it is hidden it can be a part of animation tree
+                    // just ignore this flag
                 }
             }
 
@@ -418,6 +466,10 @@ namespace AAFTagsList
             }
         }
 
+        public IDictionary<string, string> GetTreeFirstPositionMap()
+        {
+            return firstBranchInTree;
+        }
         public IDictionary<FormId, string> RaceSkeletonMap()
         {
             return formSkeleton;

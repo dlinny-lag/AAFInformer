@@ -54,7 +54,7 @@ namespace Parsing
 		{"VAGINATO", FromVagina},
 		{"STRAPONTO", FromStrapon},
 		{"STICKTO", FromPenis},
-		{"SPANKTO", FromHand}, // it is from hand. spank can be get from narrative
+		{"SPANKTO", FromHand}, // it is from hand. spank can be got from narrative
 	};
 	const std::unordered_map<std::string_view, const To> simpleTo =
 	{

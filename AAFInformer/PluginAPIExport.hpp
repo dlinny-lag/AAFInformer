@@ -18,8 +18,8 @@ namespace PluginAPIExport
 #undef AAF_INFO_EXPORT_PAPYRUS_SCRIPT
 
 	const char* pluginName = "AAFInformer";
-	const UInt32 pluginVersionInt = 0x0066;
-	const char* pluginVersionString = "0.6.6";
+	const UInt32 pluginVersionInt = 0x0067;
+	const char* pluginVersionString = "0.6.7";
 	BSReadWriteLock dataLock;
 
 
@@ -86,6 +86,15 @@ namespace PluginAPIExport
 		return true;
 	}
 
+	std::string GetPositionId(const BSFixedString& name)
+	{
+		std::string positionId = SU::ToUpper(name.c_str());
+		const auto tPtr = Proc::PositionsHolder::TreeFirstPositionMap.find(positionId);
+		if (tPtr != Proc::PositionsHolder::TreeFirstPositionMap.end())
+			positionId = tPtr->second;
+		return positionId;
+	}
+
 	VMArray<ActorInfo> GetActors(StaticFunctionTag* _, BSFixedString name, VMArray<Actor*> actors)
 	{
 		VMArray<ActorInfo> outVal;
@@ -102,10 +111,11 @@ namespace PluginAPIExport
 			return outVal;
 		}
 
-		const auto ptr = Proc::PositionsHolder::Positions.find(SU::ToUpper(name.c_str()));
+		std::string positionId = GetPositionId(name);
+		const auto ptr = Proc::PositionsHolder::Positions.find(positionId);
 		if (ptr == Proc::PositionsHolder::Positions.end())
 		{
-			_MESSAGE("Position [%s] not found", name.c_str());
+			_MESSAGE("Position [%s] not found", positionId.c_str());
 			return outVal;
 		}
 
@@ -146,11 +156,11 @@ namespace PluginAPIExport
 			_MESSAGE("Not OK");
 			return retVal;
 		}
-
-		const auto ptr = Proc::PositionsHolder::Positions.find(SU::ToUpper(name.c_str()));
+		std::string positionId = GetPositionId(name);
+		const auto ptr = Proc::PositionsHolder::Positions.find(positionId);
 		if (ptr == Proc::PositionsHolder::Positions.end())
 		{
-			_MESSAGE("Position [%s] not found", name.c_str());
+			_MESSAGE("Position [%s] not found", positionId.c_str());
 			return retVal;
 		}
 
@@ -188,11 +198,11 @@ namespace PluginAPIExport
 			_MESSAGE("Not OK");
 			return retVal;
 		};
-
-		const auto ptr = Proc::PositionsHolder::Positions.find(SU::ToUpper(name.c_str()));
+		std::string positionId = GetPositionId(name);
+		const auto ptr = Proc::PositionsHolder::Positions.find(positionId);
 		if (ptr == Proc::PositionsHolder::Positions.end())
 		{
-			_MESSAGE("Position [%s] not found", name.c_str());
+			_MESSAGE("Position [%s] not found", positionId.c_str());
 			return retVal;
 		}
 
