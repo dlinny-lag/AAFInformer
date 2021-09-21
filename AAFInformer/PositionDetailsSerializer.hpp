@@ -202,10 +202,24 @@ namespace Proc
 			HANDLE theFile = CreateFile(logFile.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 			if (theFile == INVALID_HANDLE_VALUE)
 				return retVal;
-			std::string message;
-			while (ReadString(theFile, message))
+			SInt32 size;
+			DWORD bytesRead;
+			if (!ReadFile(theFile, &size, sizeof(size), &bytesRead, NULL) || size < 0)
 			{
-				retVal.emplace_back(message);
+				CloseHandle(theFile);
+				retVal.emplace_back("Failed to read amount of error messages %s ", logFile.c_str());
+				return retVal;
+			}
+			std::string message;
+			for (SInt32 i = 0; i < size; i++)
+			{
+				if (ReadString(theFile, message))
+					retVal.emplace_back(message);
+				else
+				{
+					retVal.emplace_back("Failed to read #%d error message", i);
+					break;
+				}
 			}
 			CloseHandle(theFile);
 
