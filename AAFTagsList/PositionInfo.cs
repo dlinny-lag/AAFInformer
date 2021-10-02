@@ -14,13 +14,13 @@ namespace AAFTagsList
 
             return locationString.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(s => s.ToUpperInvariant());
         }
-        public PositionInfo(string groupOrAnim, string location)
+        public PositionInfo(string groupOrTreeOrAnim, string location)
         {
-            GroupOrAnim = groupOrAnim.ToUpperInvariant();
+            GroupOrTreeOrAnim = groupOrTreeOrAnim.ToUpperInvariant();
             Locations = new HashSet<string>(ParseLocations(location));
         }
 
-        public readonly string GroupOrAnim;
+        public readonly string GroupOrTreeOrAnim;
         public readonly HashSet<string> Locations;
     }
 }

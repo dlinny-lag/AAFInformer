@@ -43,7 +43,7 @@ namespace AAFTagsList
         /// </summary>
         private readonly Dictionary<string, List<string>> allTags = new Dictionary<string, List<string>>();
 
-        private readonly Dictionary<string, string> firstBranchInTree = new Dictionary<string, string>();
+        private readonly Dictionary<string, List<string>> listBranchInTree = new Dictionary<string, List<string>>();
 
         public AAFScenes(string xmlFolder)
         {
@@ -192,37 +192,43 @@ namespace AAFTagsList
             return false;
         }
 
+        void ProcessBranchNode(string treeId, XmlElement root)
+        {
+            if (root.Name == "branch")
+            {
+                string positionId = null;
+                foreach (XmlAttribute attribute in root.Attributes)
+                {
+                    if (string.Compare(attribute.Name, "positionID", StringComparison.InvariantCultureIgnoreCase) != 0)
+                        continue;
+                    positionId = attribute.Value.ToUpperInvariant();
+                    break;
+                }
+                if (string.IsNullOrWhiteSpace(positionId))
+                    return; // ignore invalid branch node
+
+                if (!listBranchInTree.TryGetValue(treeId, out var branches))
+                {
+                    branches = new List<string>();
+                    listBranchInTree.Add(treeId, branches);
+                }
+                branches.Add(positionId);
+
+                foreach (XmlElement node in root)
+                {
+                    ProcessBranchNode(treeId, node);
+                }
+            }
+        }
+
         void ProcessTreeNode(XmlElement root)
         {
             if (!TryGetId(root, out string treeId))
                 return; // ignore invalid tree node
+            treeId = treeId.ToUpperInvariant();
             foreach (XmlElement node in root)
             {
-                if (node.Name == "branch")
-                {
-                    string positionId = null;
-                    foreach (XmlAttribute attribute in node.Attributes)
-                    {
-                        if (string.Compare(attribute.Name, "positionID", StringComparison.InvariantCultureIgnoreCase) != 0) 
-                            continue;
-                        positionId = attribute.Value.ToUpperInvariant();
-                        break;
-                    }
-                    if (string.IsNullOrWhiteSpace(positionId))
-                        continue; // ignore invalid branch node
-
-                    if (firstBranchInTree.TryGetValue(treeId, out string existing))
-                    {
-                        if (positionId != existing)
-                        {
-                            // TODO: notify about duplication
-                        }
-                    }
-                    else
-                        firstBranchInTree.Add(treeId.ToUpperInvariant(), positionId);
-
-                    break;
-                }
+                ProcessBranchNode(treeId, node);
             }
         }
 
@@ -400,7 +406,7 @@ namespace AAFTagsList
         void ProcessPositionNode(XmlElement root)
         {
             string positionId = null;
-            string animOrGroupId = null;
+            string animOrGroupOrTree = null;
             string tagEntry = null;
             string location = null;
             foreach (XmlAttribute attr in root.Attributes)
@@ -411,11 +417,15 @@ namespace AAFTagsList
                 }
                 else if (attr.Name == "animation")
                 {
-                    animOrGroupId = attr.Value.ToUpperInvariant();
+                    animOrGroupOrTree = attr.Value.ToUpperInvariant();
                 }
                 else if (attr.Name == "animationGroup")
                 {
-                    animOrGroupId = attr.Value.ToUpperInvariant();
+                    animOrGroupOrTree = attr.Value.ToUpperInvariant();
+                }
+                else if (attr.Name == "positionTree")
+                {
+                    animOrGroupOrTree = attr.Value.ToUpperInvariant();
                 }
                 else if (attr.Name == "tags")
                 {
@@ -434,15 +444,15 @@ namespace AAFTagsList
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(animOrGroupId))
-                animOrGroupId = positionId; // position name can be used as animation name
+            if (string.IsNullOrWhiteSpace(animOrGroupOrTree))
+                animOrGroupOrTree = positionId; // position name can be used as animation name
 
 
             if (!string.IsNullOrWhiteSpace(positionId))
             {
                 if (positions.TryGetValue(positionId, out var curId))
                 {
-                    if (curId.GroupOrAnim != animOrGroupId && curId.GroupOrAnim != positionId)
+                    if (curId.GroupOrTreeOrAnim != animOrGroupOrTree && curId.GroupOrTreeOrAnim != positionId)
                     {
                         // invalid duplication
                         //TODO: notify about problem
@@ -452,7 +462,7 @@ namespace AAFTagsList
                 }
                 else
                 {
-                    positions.Add(positionId, new PositionInfo(animOrGroupId, location));
+                    positions.Add(positionId, new PositionInfo(animOrGroupOrTree, location));
                     if (!string.IsNullOrWhiteSpace(tagEntry))
                     {
                         if (!allTags.TryGetValue(positionId, out var tagEntries))
@@ -468,7 +478,13 @@ namespace AAFTagsList
 
         public IDictionary<string, string> GetTreeFirstPositionMap()
         {
-            return firstBranchInTree;
+            Dictionary<string, string> retVal = new Dictionary<string, string>(listBranchInTree.Count);
+            foreach (var pair in listBranchInTree)
+            {
+                if (pair.Value.Count > 0)
+                    retVal.Add(pair.Key, pair.Value[0]);
+            }
+            return retVal;
         }
         public IDictionary<FormId, string> RaceSkeletonMap()
         {

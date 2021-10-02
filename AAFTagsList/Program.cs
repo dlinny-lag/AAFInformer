@@ -178,7 +178,7 @@ namespace AAFTagsList
             {
                 {SearchIssue.None, new List<string>()},
                 {SearchIssue.ActorsInconsistence, new List<string>()},
-                {SearchIssue.NoGroupOrAnimationFound, new List<string>()},
+                {SearchIssue.NoGroupOrTreeOrAnimFound, new List<string>()},
                 {SearchIssue.NoAnimationFound, new List<string>()},
                 {SearchIssue.NoAnyActorFound, new List<string>()},
             };
@@ -219,16 +219,16 @@ namespace AAFTagsList
             Console.WriteLine($"Total found positions: {allPositions.Count}");
             Console.WriteLine($"OK positions: {summary[SearchIssue.None].Count}");
             Console.WriteLine($"Inconsistent: {summary[SearchIssue.ActorsInconsistence].Count}");
-            Console.WriteLine($"No Group/Animation: {summary[SearchIssue.NoGroupOrAnimationFound].Count}");
+            Console.WriteLine($"No Group/Animation: {summary[SearchIssue.NoGroupOrTreeOrAnimFound].Count}");
             Console.WriteLine($"No Animation: {summary[SearchIssue.NoAnimationFound].Count}");
             Console.WriteLine($"No actors: {summary[SearchIssue.NoAnyActorFound].Count}");
 
-            if (summary[SearchIssue.NoGroupOrAnimationFound].Count > 0)
+            if (summary[SearchIssue.NoGroupOrTreeOrAnimFound].Count > 0)
             {
                 Console.WriteLine();
                 Console.WriteLine("=========================");
                 Console.WriteLine("Positions without animation:");
-                List<string> positions = new List<string>(summary[SearchIssue.NoGroupOrAnimationFound]);
+                List<string> positions = new List<string>(summary[SearchIssue.NoGroupOrTreeOrAnimFound]);
                 positions.Sort();
                 foreach (string pos in positions)
                 {

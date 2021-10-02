@@ -10,7 +10,7 @@ namespace AAFTagsList
         ActorsInconsistence = 1, // Warning
 
         // Errors
-        NoGroupOrAnimationFound = -1,
+        NoGroupOrTreeOrAnimFound = -1,
         NoAnimationFound = -2,
         NoAnyActorFound = -3,
     }
@@ -23,26 +23,41 @@ namespace AAFTagsList
             EnsureFinished();
             result = null;
             List<ActorInfo> retVal;
-            string groupOrAnimation;
+            string groupOrTreeOrAnim;
             if (positions.TryGetValue(positionId, out var posInfo))
             {
-                groupOrAnimation = posInfo.GroupOrAnim;
+                groupOrTreeOrAnim = posInfo.GroupOrTreeOrAnim;
             }
             else
             {
-                groupOrAnimation = positionId;
+                groupOrTreeOrAnim = positionId;
             }
 
-            if (!groups.TryGetValue(groupOrAnimation, out var anims))
+            if (!groups.TryGetValue(groupOrTreeOrAnim, out var anims))
             {
-                if (animations.TryGetValue(groupOrAnimation, out retVal))
+                if (animations.TryGetValue(groupOrTreeOrAnim, out retVal))
                 {
                     retVal.ForEach(ai => ai.MakeAlive(raceSkeleton));
                     result = retVal.AsReadOnly();
                     return SearchIssue.None;
                 }
 
-                return SearchIssue.NoGroupOrAnimationFound;
+                if (listBranchInTree.TryGetValue(groupOrTreeOrAnim, out var branches))
+                {
+                    foreach (string position in branches)
+                    {
+                        if (positions.TryGetValue(position, out posInfo))
+                        {
+                            if (animations.TryGetValue(posInfo.GroupOrTreeOrAnim, out retVal))
+                            {
+                                retVal.ForEach(ai => ai.MakeAlive(raceSkeleton));
+                                result = retVal.AsReadOnly();
+                                return SearchIssue.None;
+                            }
+                        }
+                    }
+                }
+                return SearchIssue.NoGroupOrTreeOrAnimFound;
             }
 
             retVal = null;
