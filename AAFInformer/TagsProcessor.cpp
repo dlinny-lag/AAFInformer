@@ -108,14 +108,17 @@ namespace Proc
 	UInt32 TagsProcessor::IsGenitalGiver(const SceneDetails& scene, const ActorInfo& actor)
 	{
 		int retVal = 0;
-		auto p = fixedFromPenis.find(actor.Type);
-		auto v = fixedFromVagina.find(actor.Type);
-		auto s = fixedFromStrapon.find(actor.Type);
+		const auto p = fixedFromPenis.find(actor.Type);
+		const auto v = fixedFromVagina.find(actor.Type);
+		const auto s = fixedFromStrapon.find(actor.Type);
+		const bool fromPenis = p != fixedFromPenis.end() && p->second == FromPenis;
+		const bool fromVagina = v != fixedFromVagina.end() && v->second == FromVagina;
+		const bool fromStrapon = s != fixedFromStrapon.end() && s->second == FromStrapon;
 		for (const From f : actor.From)
 		{
-			retVal += f == FromPenis && p != fixedFromPenis.end() && p->second == FromPenis;
-			retVal += f == FromVagina && v != fixedFromVagina.end() && v->second == FromVagina;
-			retVal += f == FromStrapon && v != fixedFromStrapon.end() && s->second == FromPenis;
+			retVal += fromPenis && f == FromPenis;
+			retVal += fromVagina && f == FromVagina;
+			retVal += fromStrapon && f == FromStrapon;
 		}
 		return retVal;
 	}
@@ -185,7 +188,7 @@ namespace Proc
 	UInt32 TagsProcessor::IsOtherGiver(const SceneDetails& scene, const ActorInfo& actor)
 	{
 		int retVal = 0;
-		auto p = fixedFromPenis.find(actor.Type);
+		const auto p = fixedFromPenis.find(actor.Type);
 		for (const From f : actor.From)
 		{
 			retVal += f == FromOvipos || f == FromStrapon || (p != fixedFromPenis.end() && (p->second == FromOvipos || p->second == FromStrapon));
