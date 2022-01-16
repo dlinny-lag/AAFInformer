@@ -96,7 +96,7 @@ Struct ActorInfo
     bool IsAggressor
     bool IsVictim
 
-    ; integer value means amout of 'gives' or 'takes'
+    ; integer value means amount of 'gives' or 'takes'
     ; for example IsHandGiver = 2 means that actor uses 2 hands to contact other actor(s)
 
     int IsHandGiver
@@ -112,7 +112,7 @@ Struct ActorInfo
     int IsButtTaker 
     int IsNippleTaker
 
-    int IsOtherGiver ; Ovipov or Strapon
+    int IsOtherGiver ; Ovipos or Strapon
 
     int SceneType ; to simplify further data storage
 
