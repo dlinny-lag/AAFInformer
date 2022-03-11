@@ -18,8 +18,8 @@ namespace PluginAPIExport
 #undef AAF_INFO_EXPORT_PAPYRUS_SCRIPT
 
 	const char* pluginName = "AAFInformer";
-	const UInt32 pluginVersionInt = 0x0070;
-	const char* pluginVersionString = "0.7.0";
+	const UInt32 pluginVersionInt = 0x0071;
+	const char* pluginVersionString = "0.7.1";
 	BSReadWriteLock dataLock;
 
 
@@ -48,20 +48,20 @@ namespace PluginAPIExport
 		// calculated
 		ai.Set("IsAggressor", Proc::TagsProcessor::IsAggressor(scene, info));
 		ai.Set("IsVictim", Proc::TagsProcessor::IsVictim(scene, info));
-		ai.Set("IsHandGiver", Proc::TagsProcessor::IsHandGiver(scene, info));
-		ai.Set("IsHandTaker", Proc::TagsProcessor::IsHandTaker(scene, info));
-		ai.Set("IsLegGiver", Proc::TagsProcessor::IsLegGiver(scene, info));
-		ai.Set("IsLegTaker", Proc::TagsProcessor::IsLegTaker(scene, info));
-		ai.Set("IsOralGiver", Proc::TagsProcessor::IsOralGiver(scene, info));
-		ai.Set("IsOralTaker", Proc::TagsProcessor::IsOralTaker(scene, info));
-		ai.Set("IsGenitalGiver", Proc::TagsProcessor::IsGenitalGiver(scene, info));
-		ai.Set("IsGenitalTaker", Proc::TagsProcessor::IsGenitalTaker(scene, info));
+		ai.Set("IsHandGiver", Proc::TagsProcessor::IsHandGiver(info));
+		ai.Set("IsHandTaker", Proc::TagsProcessor::IsHandTaker(info));
+		ai.Set("IsLegGiver", Proc::TagsProcessor::IsLegGiver(info));
+		ai.Set("IsLegTaker", Proc::TagsProcessor::IsLegTaker(info));
+		ai.Set("IsOralGiver", Proc::TagsProcessor::IsOralGiver(info));
+		ai.Set("IsOralTaker", Proc::TagsProcessor::IsOralTaker(info));
+		ai.Set("IsGenitalGiver", Proc::TagsProcessor::IsGenitalGiver(info));
+		ai.Set("IsGenitalTaker", Proc::TagsProcessor::IsGenitalTaker(info));
 
-		ai.Set("IsAnalTaker", Proc::TagsProcessor::IsAnalTaker(scene, info));
-		ai.Set("IsButtTaker", Proc::TagsProcessor::IsButtTaker(scene, info));
-		ai.Set("IsNippleTaker", Proc::TagsProcessor::IsNippleTaker(scene, info));
+		ai.Set("IsAnalTaker", Proc::TagsProcessor::IsAnalTaker(info));
+		ai.Set("IsButtTaker", Proc::TagsProcessor::IsButtTaker(info));
+		ai.Set("IsNippleTaker", Proc::TagsProcessor::IsNippleTaker(info));
 
-		ai.Set("IsOtherGiver", Proc::TagsProcessor::IsOtherGiver(scene, info));
+		ai.Set("IsOtherGiver", Proc::TagsProcessor::IsOtherGiver(info));
 
 		ai.Set("SceneType", static_cast<SInt32>(scene.Type));
 	}

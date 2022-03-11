@@ -26,20 +26,20 @@ namespace Proc
 	{
 		bool static IsAggressor(const SceneDetails&, const ActorInfo&);
 		bool static IsVictim(const SceneDetails&, const ActorInfo&);
-		UInt32 static IsHandGiver(const SceneDetails&, const ActorInfo&);
-		UInt32 static IsHandTaker(const SceneDetails&, const ActorInfo&);
-		UInt32 static IsLegGiver(const SceneDetails&, const ActorInfo&);
-		UInt32 static IsLegTaker(const SceneDetails&, const ActorInfo&);
-		UInt32 static IsOralGiver(const SceneDetails&, const ActorInfo&);
-		UInt32 static IsOralTaker(const SceneDetails&, const ActorInfo&);
-		UInt32 static IsGenitalGiver(const SceneDetails&, const ActorInfo&);
-		UInt32 static IsGenitalTaker(const SceneDetails&, const ActorInfo&);
+		UInt32 static IsHandGiver(const ActorInfo&);
+		UInt32 static IsHandTaker(const ActorInfo&);
+		UInt32 static IsLegGiver(const ActorInfo&);
+		UInt32 static IsLegTaker(const ActorInfo&);
+		UInt32 static IsOralGiver(const ActorInfo&);
+		UInt32 static IsOralTaker(const ActorInfo&);
+		UInt32 static IsGenitalGiver(const ActorInfo&);
+		UInt32 static IsGenitalTaker(const ActorInfo&);
 
-		UInt32 static IsAnalTaker(const SceneDetails&, const ActorInfo&);
-		UInt32 static IsButtTaker(const SceneDetails&, const ActorInfo&);
-		UInt32 static IsNippleTaker(const SceneDetails&, const ActorInfo&);
+		UInt32 static IsAnalTaker(const ActorInfo&);
+		UInt32 static IsButtTaker(const ActorInfo&);
+		UInt32 static IsNippleTaker(const ActorInfo&);
 
-		UInt32 static IsOtherGiver(const SceneDetails&, const ActorInfo&);
+		UInt32 static IsOtherGiver(const ActorInfo&);
 
 		bool static FillActors(const SceneDetails& scene, VMArray<Actor*> actors, std::vector<Proc::ActorInfo>& outVal);
 	};

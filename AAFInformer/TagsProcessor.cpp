@@ -24,9 +24,17 @@ namespace Proc
 		return -scene.DomLevel;
 	}
 
+	bool inline Stimulates(const ActorInfo& actor)
+	{
+		return
+			actor.Type == ActorType::F && TagsProcessor::IsOtherGiver(actor) ||
+			TagsProcessor::IsOralGiver(actor) || 
+			TagsProcessor::IsGenitalGiver(actor);
+	}
+
 	SInt32 inline StimLevel(const SceneDetails& scene, const ActorInfo& actor)
 	{
-		if (TagsProcessor::IsGenitalGiver(scene, actor))
+		if (Stimulates(actor))
 			return scene.StimLevel < 0 ? -scene.StimLevel: scene.StimLevel; // actor actively stimulate. without pain
 
 		if (actor.To.empty())
@@ -48,7 +56,7 @@ namespace Proc
 		return false;
 	}
 
-	UInt32 TagsProcessor::IsHandGiver(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsHandGiver(const ActorInfo& actor)
 	{
 		int retVal = 0;
 		for (const From f : actor.From)
@@ -57,7 +65,7 @@ namespace Proc
 		}
 		return retVal;
 	}
-	UInt32 TagsProcessor::IsHandTaker(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsHandTaker(const ActorInfo& actor)
 	{
 		int retVal = 0;
 		for (const To t : actor.To)
@@ -66,7 +74,7 @@ namespace Proc
 		}
 		return retVal;
 	}
-	UInt32 TagsProcessor::IsLegGiver(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsLegGiver(const ActorInfo& actor)
 	{
 		int retVal = 0;
 		for (const From f : actor.From)
@@ -75,7 +83,7 @@ namespace Proc
 		}
 		return retVal;
 	}
-	UInt32 TagsProcessor::IsLegTaker(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsLegTaker(const ActorInfo& actor)
 	{
 		int retVal = 0;
 		for (const To t : actor.To)
@@ -86,7 +94,7 @@ namespace Proc
 	}
 
 
-	UInt32 TagsProcessor::IsOralGiver(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsOralGiver(const ActorInfo& actor)
 	{
 		int retVal = 0;
 		for(const From f : actor.From)
@@ -96,7 +104,7 @@ namespace Proc
 		return retVal;
 	}
 
-	UInt32 TagsProcessor::IsOralTaker(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsOralTaker(const ActorInfo& actor)
 	{
 		int retVal = 0;
 		for (const To t : actor.To)
@@ -105,7 +113,7 @@ namespace Proc
 		}
 		return retVal;
 	}
-	UInt32 TagsProcessor::IsGenitalGiver(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsGenitalGiver(const ActorInfo& actor)
 	{
 		int retVal = 0;
 		const auto p = fixedFromPenis.find(actor.Type);
@@ -113,7 +121,7 @@ namespace Proc
 		const auto s = fixedFromStrapon.find(actor.Type);
 		const bool fromPenis = p != fixedFromPenis.end() && p->second == FromPenis;
 		const bool fromVagina = v != fixedFromVagina.end() && v->second == FromVagina;
-		const bool fromStrapon = s != fixedFromStrapon.end() && s->second == FromStrapon;
+		const bool fromStrapon = s != fixedFromStrapon.end() && s->second == FromPenis;
 		for (const From f : actor.From)
 		{
 			retVal += fromPenis && f == FromPenis;
@@ -122,7 +130,7 @@ namespace Proc
 		}
 		return retVal;
 	}
-	UInt32 TagsProcessor::IsGenitalTaker(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsGenitalTaker(const ActorInfo& actor)
 	{
 		int retVal = 0;
 
@@ -158,7 +166,7 @@ namespace Proc
 		}
 		return retVal;
 	}
-	UInt32 TagsProcessor::IsAnalTaker(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsAnalTaker(const ActorInfo& actor)
 	{
 		int retVal = 0;
 		for (const To t:actor.To)
@@ -167,7 +175,7 @@ namespace Proc
 		}
 		return retVal;
 	}
-	UInt32 TagsProcessor::IsButtTaker(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsButtTaker(const ActorInfo& actor)
 	{
 		int retVal = 0;
 		for (const To t : actor.To)
@@ -176,7 +184,7 @@ namespace Proc
 		}
 		return retVal;
 	}
-	UInt32 TagsProcessor::IsNippleTaker(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsNippleTaker(const ActorInfo& actor)
 	{
 		int retVal = 0;
 		for (const To t : actor.To)
@@ -185,13 +193,14 @@ namespace Proc
 		}
 		return retVal;
 	}
-	UInt32 TagsProcessor::IsOtherGiver(const SceneDetails& scene, const ActorInfo& actor)
+	UInt32 TagsProcessor::IsOtherGiver(const ActorInfo& actor)
 	{
 		int retVal = 0;
 		const auto p = fixedFromPenis.find(actor.Type);
+		const bool fromOther = p != fixedFromPenis.end() && (p->second == FromOvipos || p->second == FromStrapon);
 		for (const From f : actor.From)
 		{
-			retVal += f == FromOvipos || f == FromStrapon || (p != fixedFromPenis.end() && (p->second == FromOvipos || p->second == FromStrapon));
+			retVal += f == FromOvipos || f == FromStrapon || (f == FromPenis && fromOther);
 		}
 		return retVal;
 	}
