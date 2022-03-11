@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace AAFTagsList
 {
     partial class ActorInfo
@@ -41,6 +42,9 @@ namespace AAFTagsList
                 return Sex == other.Sex && string.Equals(Skeleton, other.Skeleton) && string.Equals(Race, other.Race);
             return false;
         }
-
+        public override int GetHashCode()
+        {
+            throw new InvalidOperationException("Must not be used as a key");
+        }
     }
 }
