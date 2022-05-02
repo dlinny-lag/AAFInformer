@@ -16,6 +16,7 @@ namespace Parsing
 		"CLIMAXM",
 		"SWALLOW",
 		"FACEDOWN",
+		"FLEXIBLE",
 		"KNEELING",
 		"LEGSFREE",
 		"LEGSTIED",

@@ -48,6 +48,7 @@ namespace Parsing
 		{"PROTECTRONM", ProtectronM},
 		{"HANDYM", HandyM},
 		{"MOLERAT", Molerat},
+		{"BRAHMIN", Brahmin}
 	};
 };
 

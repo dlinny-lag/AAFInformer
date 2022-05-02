@@ -67,6 +67,7 @@ namespace Parsing
 		{"TOMOUTH", ToMouth},
 		{"TONIPPLE", ToNipples}, // mistypes are possible...
 		{"TONIPPLES", ToNipples},
+		{"TOTIT", ToNipples},
 		// depends on actor type. has default value that need to be fixed later
 		{"TOPENIS", ToPenis},
 		{"TOVAGINA", ToVagina},

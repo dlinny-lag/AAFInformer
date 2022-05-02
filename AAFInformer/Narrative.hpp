@@ -6,6 +6,7 @@ namespace Parsing
 	const std::unordered_set<std::string_view> sceneNarrative =
 	{
 		"69",
+		"FJ",
 		"HUNG",
 		"POSE",
 		"CARRY",
@@ -15,6 +16,7 @@ namespace Parsing
 		"RIMJOB",
 		"TERASE", // mistype of tease
 		"TITJOB",
+		"URINAL",
 		"BLOWJOB",
 		"BOOBJOB",
 		"COWGIRL",
@@ -28,10 +30,12 @@ namespace Parsing
 		"KISSING",
 		"RIMMING",
 		"SCISSOR",
+		"SITTING",
 		"FOREPLAY",
 		"GANGBANG",
 		"SPANKING",
 		"ANALINGUS",
+		"FINGERING",
 		"LICKTEASE",
 		"POWERBOMB",
 		"SEXYDANCE",
@@ -41,6 +45,7 @@ namespace Parsing
 		"MISSIONARY",
 		"SCISSORING",
 		"CUNNILINGUS",
+		"FACESITTING",
 		"ELECTROCUTED",
 		"MASTURBATION",
 	};

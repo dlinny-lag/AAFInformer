@@ -44,9 +44,10 @@ namespace Parsing
 		HandyM = ProtectronM + 4,
 		Molerat = HandyM + 4,
 		GulperLarge = Molerat + 4,
-		Last = GulperLarge
+		Brahmin = GulperLarge + 4,
+		Last = Brahmin
 	}; // 27 races
-	static_assert (TagActorType::Last == (27 - 1) * 4 + TagActorType::M);
+	static_assert (TagActorType::Last == (28 - 1) * 4 + TagActorType::M);
 };
 // ReSharper restore IdentifierTypo
 #pragma warning (pop)
