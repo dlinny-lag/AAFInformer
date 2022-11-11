@@ -57,6 +57,11 @@ namespace AAFTagsList
                             {
                                 if (animations.TryGetValue(posInfo.GroupOrTreeOrAnim, out infos))
                                     break;
+                                if (groups.TryGetValue(posInfo.GroupOrTreeOrAnim, out var animsInGroup) && animsInGroup.Count > 0)
+                                {
+                                    if (animations.TryGetValue(animsInGroup.First(), out infos))
+                                        break;
+                                }
                             }
                         }
                     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AAFTagsList
@@ -53,6 +54,16 @@ namespace AAFTagsList
                                 retVal.ForEach(ai => ai.MakeAlive(raceSkeleton));
                                 result = retVal.AsReadOnly();
                                 return SearchIssue.None;
+                            }
+
+                            if (groups.TryGetValue(posInfo.GroupOrTreeOrAnim, out var animsInGroup) && animsInGroup.Count > 0)
+                            {
+                                if (animations.TryGetValue(animsInGroup.First(), out retVal))
+                                {
+                                    retVal.ForEach(ai => ai.MakeAlive(raceSkeleton));
+                                    result = retVal.AsReadOnly();
+                                    return SearchIssue.None;
+                                }
                             }
                         }
                     }
