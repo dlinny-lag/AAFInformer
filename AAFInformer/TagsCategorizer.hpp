@@ -283,7 +283,7 @@ namespace Proc
         }
         static bool TryFillContacts(SceneDetails& retVal, const std::string_view tag, size_t& contactIndex)
         {
-            const size_t delimIndex = tag.find("TO", 1); // 1 for handling Tonque
+            const size_t delimIndex = tag.find("TO", 1); // 1 for handling Tongue
             if (delimIndex != std::string_view::npos)
             {
                 if (tag == NullToSelf)
@@ -291,8 +291,22 @@ namespace Proc
                     // seems useless as it always applied to actor0
                     return true;
                 }
+
+                bool useIndexFromTag = false;
+                int indexFrom =-1;
+                int indexTo =  -1;
                 const std::string_view from(tag.data(), delimIndex + 2);
-                const std::string_view to(tag.data() + delimIndex);
+                size_t dirDelimIndex = tag.find(':');
+                if (dirDelimIndex == std::string_view::npos)
+                    dirDelimIndex = tag.size(); // end of string
+                else
+                {
+                    if (2 == sscanf_s(tag.data() + dirDelimIndex, ":%d-%d", &indexFrom, &indexTo))
+                    {
+                        useIndexFromTag = true;
+                    }
+                }
+                const std::string_view to(tag.data() + delimIndex, dirDelimIndex-delimIndex);
                 // it is not possible to calculate what actors are contacted if their number greater than 2
                 // so we assume that all contacts from actor1+ points to actor0
                 // TODO: push to preparing tags XML that contains all necessary information
@@ -301,15 +315,28 @@ namespace Proc
                 const auto ptrTo = simpleTo.find(to);
                 if (ptrFrom != simpleFrom.end() && ptrTo != simpleTo.end())
                 {
-                    // To actor0
-                    retVal.ToContacts[0].push_back(ptrTo->second);
-                    contactIndex++;
-                    if (contactIndex >= retVal.FromContacts.size())
-                        contactIndex = retVal.FromContacts.size() - 1; // set all contacts to last participant
-                    // From corresponding actor
-                    retVal.FromContacts[contactIndex].push_back(ptrFrom->second);
-                    _MESSAGE("  Tag=%s: [0]=%d, [%d]=%d", std::string(tag).c_str(), ptrTo->second, contactIndex, ptrFrom->second);
+                    if (useIndexFromTag && indexTo>= 0 && indexTo < retVal.ToContacts.size() && indexFrom >= 0 && indexFrom < retVal.FromContacts.size())
+                    {
+                        retVal.ToContacts[indexTo].push_back(ptrTo->second);
+                        retVal.FromContacts[indexFrom].push_back(ptrFrom->second);
 
+                        contactIndex++;
+	                    if (contactIndex >= retVal.FromContacts.size())
+	                        contactIndex = retVal.FromContacts.size() - 1; // set all contacts to last participant
+
+                        _MESSAGE("  Tag=%s: [%d]=%d, [%d]=%d", std::string(tag).c_str(), indexTo, ptrTo->second, indexFrom, ptrFrom->second);
+                    }
+                    else
+                    {
+	                    // To actor0
+	                    retVal.ToContacts[0].push_back(ptrTo->second);
+	                    contactIndex++;
+	                    if (contactIndex >= retVal.FromContacts.size())
+	                        contactIndex = retVal.FromContacts.size() - 1; // set all contacts to last participant
+	                    // From corresponding actor
+	                    retVal.FromContacts[contactIndex].push_back(ptrFrom->second);
+	                    _MESSAGE("  Tag=%s: [0]=%d, [%d]=%d", std::string(tag).c_str(), ptrTo->second, contactIndex, ptrFrom->second);
+                    }
                     return true;
                 }
             }
@@ -424,17 +451,39 @@ namespace Proc
                     continue;
                 }
 
-                const size_t delimIndex = tag.find("TO", 1); // 1 for handling Tonque
+                const size_t delimIndex = tag.find("TO", 1); // 1 for handling Tongue
                 if (delimIndex != std::string_view::npos)
                 {
                     if (tag == NullToSelf)
                         continue;
                     const std::string_view from(tag.data(), delimIndex + 2);
-                    const std::string_view to(tag.data() + delimIndex);
+					size_t dirDelimIndex = tag.find(":");
+                    bool useDirection = false;
+                    if (dirDelimIndex == std::string_view::npos)
+                        dirDelimIndex = tag.size(); // end of string
+                    else
+                        useDirection = true;
+                    const std::string_view to(tag.data() + delimIndex, dirDelimIndex-delimIndex);
                     const auto ptrFrom = simpleFrom.find(from);
                     const auto ptrTo = simpleTo.find(to);
                     if (ptrFrom != simpleFrom.end() && ptrTo != simpleTo.end())
+                    {
+                        if (useDirection)
+                        {
+	                        int indexFrom =-1;
+	                        int indexTo =  -1;
+                            std::string_view direction(tag.data() + dirDelimIndex, tag.size()-dirDelimIndex);
+	                        if (2 == sscanf_s(tag.data() + dirDelimIndex, ":%d-%d", &indexFrom, &indexTo, tag.size()-dirDelimIndex))
+	                        {
+		                        bool useIndex = true;
+	                        }
+                            else
+                            {
+	                            bool useIndex = false;
+                            }
+                        }
                         continue;
+                    }
                 }
 
                 if (!retVal.Unparsed.empty())
