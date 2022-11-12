@@ -324,9 +324,9 @@ namespace Proc
                         {
 	                        // new format tag found first time
                             // clear collected contacts information
-                            for (auto tos : retVal.ToContacts)
+                            for (auto& tos : retVal.ToContacts)
 								tos.clear();
-                            for(auto froms : retVal.FromContacts)
+                            for(auto& froms : retVal.FromContacts)
 								froms.clear();
                             _MESSAGE("  New contacts format tag detected. Old format collected data is discarded");
                         }
