@@ -12,6 +12,7 @@ namespace Parsing
 		"CARRY",
 		"DANCE",
 		"DOGGY",
+		"SPOON",
 		"CUDDLE",
 		"RIMJOB",
 		"TERASE", // mistype of tease
@@ -31,6 +32,8 @@ namespace Parsing
 		"RIMMING",
 		"SCISSOR",
 		"SITTING",
+		"FACEFUCK",
+		"FOOTPLAY",
 		"FOREPLAY",
 		"GANGBANG",
 		"SPANKING",

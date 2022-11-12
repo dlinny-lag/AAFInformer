@@ -15,6 +15,7 @@ namespace Parsing
 		"RUFGT",
 		"RUGFT",
 		"VADER",
+		"AVILAS",
 		"FARELLE",
 		"ROHZIMA",
 		"GRAYUSER",

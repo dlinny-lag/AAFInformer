@@ -13,6 +13,11 @@ namespace Parsing
 		{"3P", {P, P, P}},
 		{"4P", {P, P, P, P}},
 		{"5P", {P, P, P, P, P}},
+		{"6P", {P, P, P, P, P, P}},
+		{"7P", {P, P, P, P, P, P, P}},
+		{"8P", {P, P, P, P, P, P, P, P}},
+		{"9P", {P, P, P, P, P, P, P, P, P}},
+		{"10P", {P, P, P, P, P, P, P, P, P, P}},
 	};
 
 
