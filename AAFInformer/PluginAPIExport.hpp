@@ -111,7 +111,7 @@ namespace PluginAPIExport
 			return outVal;
 		}
 
-		std::string positionId = GetPositionId(name);
+		const std::string positionId = GetPositionId(name);
 		const auto ptr = Proc::PositionsHolder::Positions.find(positionId);
 		if (ptr == Proc::PositionsHolder::Positions.end())
 		{

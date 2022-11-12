@@ -1,9 +1,1 @@
-fixes:
-rxl_bp70_anims_positionData.xml
-BraveAnimations_animationGroupData.xml
-BraveAnimations_animationData.xml
-SlaveAndModelPoses_animationData.xml
-SavageCabbage_positionData_SM.xml
-CreaturePack02_positionData.xml
-Theme_SexKinky_FurnFF_tagData.xml
-Theme_Animations_raceData_DLCNukaWorld.xml
+

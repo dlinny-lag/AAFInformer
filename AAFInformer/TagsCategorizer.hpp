@@ -117,6 +117,7 @@ namespace Proc
 
             bool hasAuthor = false;
             size_t contactIndex = 0;
+            bool newContactsFormat = false;
             for (const std::string& t : tags)
             {
                 auto upper = SU::ToUpper(t);
@@ -138,7 +139,7 @@ namespace Proc
                 if (TryFillNumericValues(retVal, tag))
                     continue;
 
-                if (TryFillContacts(retVal, tag, contactIndex))
+                if (TryFillContacts(retVal, tag, contactIndex, newContactsFormat))
                     continue;
 
                 std::vector<TagActorType> tagActors = ParseActors(tag);
@@ -281,7 +282,7 @@ namespace Proc
             }
             return false;
         }
-        static bool TryFillContacts(SceneDetails& retVal, const std::string_view tag, size_t& contactIndex)
+        static bool TryFillContacts(SceneDetails& retVal, const std::string_view tag, size_t& contactIndex, bool& newContactsFormat)
         {
             const size_t delimIndex = tag.find("TO", 1); // 1 for handling Tongue
             if (delimIndex != std::string_view::npos)
@@ -298,12 +299,46 @@ namespace Proc
                 const std::string_view from(tag.data(), delimIndex + 2);
                 size_t dirDelimIndex = tag.find(':');
                 if (dirDelimIndex == std::string_view::npos)
+                {
+                    if (newContactsFormat)
+                    {
+                        _MESSAGE("  Old format contact tag '%s' ignored", tag.data());
+                        return true; // ignore old format tags if new format tag was detected
+                    }
                     dirDelimIndex = tag.size(); // end of string
+                }
                 else
                 {
                     if (2 == sscanf_s(tag.data() + dirDelimIndex, ":%d-%d", &indexFrom, &indexTo))
                     {
-                        useIndexFromTag = true;
+                        if (indexTo>= 0 && indexTo < retVal.ToContacts.size() && indexFrom >= 0 && indexFrom < retVal.FromContacts.size())
+                        {
+	                        useIndexFromTag = true;
+                        }
+                        else
+                        {
+                            _MESSAGE("  Invalid actor indices in tag %s", tag.data());
+	                        return true; // invalid new format tag, ignore it
+                        }
+                        if(!newContactsFormat)
+                        {
+	                        // new format tag found first time
+                            // clear collected contacts information
+                            for (auto tos : retVal.ToContacts)
+								tos.clear();
+                            for(auto froms : retVal.FromContacts)
+								froms.clear();
+                            _MESSAGE("  New contacts format tag detected. Old format collected data is discarded");
+                        }
+                        newContactsFormat = true;
+                    }
+                    else
+                    {
+	                    if (newContactsFormat)
+	                    {
+                            _MESSAGE("  Invalid contacts tag %s", tag.data());
+                            return true; // invalid new format tag, ignore it
+                        }
                     }
                 }
                 const std::string_view to(tag.data() + delimIndex, dirDelimIndex-delimIndex);
@@ -315,7 +350,7 @@ namespace Proc
                 const auto ptrTo = simpleTo.find(to);
                 if (ptrFrom != simpleFrom.end() && ptrTo != simpleTo.end())
                 {
-                    if (useIndexFromTag && indexTo>= 0 && indexTo < retVal.ToContacts.size() && indexFrom >= 0 && indexFrom < retVal.FromContacts.size())
+                    if (useIndexFromTag)
                     {
                         retVal.ToContacts[indexTo].push_back(ptrTo->second);
                         retVal.FromContacts[indexFrom].push_back(ptrFrom->second);
