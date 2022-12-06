@@ -298,6 +298,8 @@ namespace Proc
                 int indexTo =  -1;
                 const std::string_view from(tag.data(), delimIndex + 2);
                 size_t dirDelimIndex = tag.find(':');
+                if (dirDelimIndex < delimIndex) // ':' found before <one>TO<other>
+                    return false; // unexpected tag, skip
                 if (dirDelimIndex == std::string_view::npos)
                 {
                     if (newContactsFormat)
@@ -493,11 +495,14 @@ namespace Proc
                         continue;
                     const std::string_view from(tag.data(), delimIndex + 2);
 					size_t dirDelimIndex = tag.find(":");
+                    if (dirDelimIndex < delimIndex) // ':' found before <one>TO<other>
+                        continue; // unexpected tag, skip
                     bool useDirection = false;
                     if (dirDelimIndex == std::string_view::npos)
                         dirDelimIndex = tag.size(); // end of string
                     else
                         useDirection = true;
+
                     const std::string_view to(tag.data() + delimIndex, dirDelimIndex-delimIndex);
                     const auto ptrFrom = simpleFrom.find(from);
                     const auto ptrTo = simpleTo.find(to);
