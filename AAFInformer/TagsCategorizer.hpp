@@ -513,7 +513,7 @@ namespace Proc
 	                        int indexFrom =-1;
 	                        int indexTo =  -1;
                             std::string_view direction(tag.data() + dirDelimIndex, tag.size()-dirDelimIndex);
-	                        if (2 == sscanf_s(tag.data() + dirDelimIndex, ":%d-%d", &indexFrom, &indexTo, tag.size()-dirDelimIndex))
+	                        if (2 == sscanf_s(tag.data() + dirDelimIndex, ":%d-%d", &indexFrom, &indexTo))
 	                        {
 		                        bool useIndex = true;
 	                        }
