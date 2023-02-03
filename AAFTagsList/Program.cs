@@ -227,8 +227,8 @@ namespace AAFTagsList
             {
                 Console.WriteLine();
                 Console.WriteLine("=========================");
-                Console.WriteLine("Positions without animation:");
                 List<string> positions = new List<string>(summary[SearchIssue.NoGroupOrTreeOrAnimFound]);
+                Console.WriteLine($"Positions without animation ({positions.Count}):");
                 positions.Sort();
                 foreach (string pos in positions)
                 {
@@ -357,6 +357,34 @@ namespace AAFTagsList
                     Console.WriteLine($"{pair.Key}: {string.Join(',', pair.Value)}");
                 }
             }
+
+            
+            Console.WriteLine();
+            Console.WriteLine($"===Total amount of position declarations = {TagExtractor.PositionsDeclaration.Count}");
+
+            Console.WriteLine();
+            Console.WriteLine("===Duplicate position definitions");
+
+            foreach (var pair in TagExtractor.PositionsDeclaration)
+            {
+                if (pair.Value.Count > 1)
+                {
+                    Console.WriteLine(pair.Key);
+                    foreach (string fileName in pair.Value)
+                    {
+                        Console.WriteLine($"\t{fileName}");
+                    }
+                }
+            }
+
+            Console.WriteLine();
+            foreach (var missingAnimation in summary[SearchIssue.NoGroupOrTreeOrAnimFound])
+            {
+                TagExtractor.PositionsDeclaration.Remove(missingAnimation);
+            }
+            Console.WriteLine($"Valid position declarations (has animation) amount = {TagExtractor.PositionsDeclaration.Count}");
+
+            Console.WriteLine("====");
         }
     }
 }

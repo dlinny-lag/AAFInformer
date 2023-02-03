@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -54,6 +55,7 @@ namespace AAFTagsList
             if (element.Name == "position")
             {
                 ExtractTagsFromXmlElement(element, "id", fileName);
+                RegisterPosition(element, fileName);
             }
         }
 
@@ -78,6 +80,36 @@ namespace AAFTagsList
             foreach (XmlNode element in doc)
             {
                 ProcessNode(element, fileName);
+            }
+        }
+
+        public static Dictionary<string, List<string>>
+            PositionsDeclaration = new Dictionary<string, List<string>>(1000);
+
+        private static void RegisterPosition(XmlNode node, string fileName)
+        {
+            XmlElement element = node as XmlElement;
+            if (element == null)
+                return;
+            string id = null;
+            foreach (XmlAttribute attribute in element.Attributes)
+            {
+                if (string.Compare("id", attribute.Name, StringComparison.InvariantCultureIgnoreCase) == 0)
+                {
+                    id = attribute.Value;
+                }
+            }
+            if (id == null)
+                return;
+
+            lock (PositionsDeclaration)
+            {
+                if (!PositionsDeclaration.TryGetValue(id, out var files))
+                {
+                    files = new List<string>();
+                    PositionsDeclaration.Add(id, files);
+                }
+                files.Add(fileName);
             }
         }
     }
