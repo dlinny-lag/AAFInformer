@@ -197,10 +197,10 @@ namespace Proc
 	{
 		int retVal = 0;
 		const auto p = fixedFromPenis.find(actor.Type);
-		const bool fromOther = p != fixedFromPenis.end() && (p->second == FromOvipos || p->second == FromStrapon);
+		const bool fromOther = p != fixedFromPenis.end() && (p->second == FromOvipos || p->second == FromTentacle|| p->second == FromStrapon);
 		for (const From f : actor.From)
 		{
-			retVal += f == FromOvipos || f == FromStrapon || (f == FromPenis && fromOther);
+			retVal += f == FromOvipos || f == FromTentacle || f == FromStrapon || (f == FromPenis && fromOther);
 		}
 		return retVal;
 	}

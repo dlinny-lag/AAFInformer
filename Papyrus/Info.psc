@@ -47,7 +47,7 @@ int property MirelurkQueen = 149 autoreadonly
 int property MirelurkHunter = 153 autoreadonly
 int property HandyCreateABot = 157 autoreadonly
 int property SupermutantBehemoth = 161 autoreadonly
-
+int property Tentacle = 165 autoreadonly
 
 ; scene types
 
@@ -128,7 +128,7 @@ EndStruct
 ; returns actors information for provided AAF position
 ;  positionName - name of scene, that user could see in AAF UI
 ;  actors - list of actors participated in scene
-; returns None on failure. For example, when position with such name is not exist or list of actors does not corresponds to actors defined for animation
+; returns None on failure. For example, when position with such name does not exist or list of actors does not corresponds to actors defined for animation
 ActorInfo[] function GetActors(string positionName, Actor[] actors) global native
 
 ; returns AAF position information

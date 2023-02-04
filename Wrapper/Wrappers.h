@@ -104,6 +104,8 @@ namespace Wrapper
 		HandyM = ProtectronM + 4,
 		Molerat = HandyM + 4,
 		GulperLarge = Molerat + 4,
+		Brahmin = GulperLarge + 4,
+		Tentacle = Brahmin + 4,
 	};
 	
 	public ref class SceneDetails

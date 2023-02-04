@@ -53,7 +53,7 @@ namespace AAFTagsList
         HandyCreateABot = MirelurkHunter + 4,
         SupermutantBehemoth = HandyCreateABot + 4,
         // New actor types must appeared below this line to avoid binary incompatibility
-
+        Tentacle = SupermutantBehemoth + 4,
 
 #if CSharp
     }

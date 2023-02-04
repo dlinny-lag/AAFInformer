@@ -80,6 +80,7 @@ namespace AAFTagsList
             {"MIRELURKHUNTER", ActorType.MirelurkHunter + Any},
             {"HANDYCREATEABOT", ActorType.HandyCreateABot + Any},
             {"SUPERMUTANTBEHEMOTH", ActorType.SupermutantBehemoth + Any},
+            {"TENTACLE", ActorType.Tentacle + Any},
         };
     }
 }

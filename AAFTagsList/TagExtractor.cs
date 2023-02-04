@@ -40,7 +40,7 @@ namespace AAFTagsList
 
         private static void ProcessNode(XmlNode element, string fileName)
         {
-            if (element.Name == FakeRoot || element.Name == "positionData")
+            if (element.Name == FakeRoot || element.Name == "positionData" || element.Name == "tagData")
             {
                 foreach (XmlNode node in element)
                 {

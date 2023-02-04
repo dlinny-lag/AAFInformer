@@ -17,6 +17,7 @@ namespace Parsing
 		FromMouth,
 		FromTongue,
 		FromOvipos,
+		FromTentacle,
 		// depends in ActorType
 		FromPenis,
 		FromVagina,
@@ -49,6 +50,7 @@ namespace Parsing
 		{"TONGUETO", FromTongue},
 		{"OVIPOSTO", FromOvipos},
 		{"LEFTHANDTO", FromHand},
+		{"TENTACLETO", FromTentacle},
 		// depends on actor type. has default value that need to be fixed later
 		{"PENISTO", FromPenis},
 		{"VAGINATO", FromVagina},

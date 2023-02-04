@@ -34,16 +34,16 @@ namespace AAFTagsList
 
         public override string ToString()
         {
-            string TagActorTypeString;
+            string tagActorTypeString;
             if (TryGetTagType(out TagActorType type))
             {
-                TagActorTypeString = type.ToString();
+                tagActorTypeString = type.ToString();
             }
             else
             {
-                TagActorTypeString = "Missing type";
+                tagActorTypeString = "Missing type";
             }
-            return TagActorTypeString;
+            return tagActorTypeString;
             //return $"{Skeleton}-{Sex}-{TagActorTypeString}. {DeclaringFile}";
         }
 
@@ -77,7 +77,8 @@ namespace AAFTagsList
             {"CREATEABOT", TagActorType.ProtectronM+Any },
             {"HANDYCREATEABOT", TagActorType.HandyM+Any },
             {"MOLERAT", TagActorType.Molerat+Any },
-            {"GULPERLARGE", TagActorType.GulperLarge+Any }
+            {"GULPERLARGE", TagActorType.GulperLarge+Any },
+            {"TENTACLE", TagActorType.Tentacle+Any }
         };
     }
 }

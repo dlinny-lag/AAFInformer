@@ -45,9 +45,10 @@ namespace Parsing
 		Molerat = HandyM + 4,
 		GulperLarge = Molerat + 4,
 		Brahmin = GulperLarge + 4,
-		Last = Brahmin
-	}; // 27 races
-	static_assert (TagActorType::Last == (28 - 1) * 4 + TagActorType::M);
+		Tentacle = Brahmin + 4,
+		Last = Tentacle
+	}; // 28 races
+	static_assert (TagActorType::Last == (29 - 1) * 4 + TagActorType::M);
 };
 // ReSharper restore IdentifierTypo
 #pragma warning (pop)
