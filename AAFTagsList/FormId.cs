@@ -11,7 +11,7 @@ namespace AAFTagsList
             Priority = priority;
         }
 
-        private const int elsMask = 0x00000FFF;
+        private const int eslMask = 0x00000FFF;
         private const int espMask = 0x00FFFFFF;
         static int FixFormId(int formId)
         {
@@ -19,7 +19,7 @@ namespace AAFTagsList
             if (modId != 0xFE) // esm and esp
                 return formId & espMask;
             // esl
-            return formId & elsMask;
+            return formId & eslMask;
         }
 
         public readonly string ModName;
