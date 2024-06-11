@@ -18,8 +18,8 @@ namespace PluginAPIExport
 #undef AAF_INFO_EXPORT_PAPYRUS_SCRIPT
 
 	const char* pluginName = "AAFInformer";
-	const UInt32 pluginVersionInt = 0x0078;
-	const char* pluginVersionString = "0.7.8";
+	const UInt32 pluginVersionInt = 0x0079;
+	const char* pluginVersionString = "0.7.9";
 	BSReadWriteLock dataLock;
 
 
