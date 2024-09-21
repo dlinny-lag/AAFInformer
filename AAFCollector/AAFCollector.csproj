@@ -80,6 +80,7 @@
     <Compile Include="ActorInfo.GetType.cs" />
     <Compile Include="FurnitureDetails.cs" />
     <Compile Include="HashCode.cs" />
+    <Compile Include="LoadException.cs" />
     <Compile Include="PositionDetails.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

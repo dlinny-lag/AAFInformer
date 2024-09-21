@@ -67,9 +67,10 @@ namespace AAFTagsList
         XmlDocument LoadFile(string file)
         {
             string content = File.ReadAllText(file);
+            LoadException _ = null;
             try
             {
-                return XmlFileLoader.LoadString(content);
+                return XmlFileLoader.LoadString(content, ref _);
             }
             catch (LoadException lex)
             {
