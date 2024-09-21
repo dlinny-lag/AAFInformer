@@ -109,7 +109,10 @@ extern "C"
 
 		const bool retVal = Proc::PositionsHolder::StartXmlParsing();
 		if (!retVal)
-			return false;
+		{
+			_ERROR("Failed to initialize XML data collecting");
+			return true; // do not block game startup
+		}
 
 		g_messaging->RegisterListener(g_pluginHandle, "F4SE", MessageHandler);
 		g_papyrus->Register(RegisterExportingFunctions);
