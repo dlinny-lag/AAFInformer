@@ -64,6 +64,9 @@
     <Compile Include="..\AAFTagsList\FormId.cs">
       <Link>FormId.cs</Link>
     </Compile>
+    <Compile Include="..\AAFTagsList\LoadException.cs">
+      <Link>LoadException.cs</Link>
+    </Compile>
     <Compile Include="..\AAFTagsList\PositionInfo.cs">
       <Link>PositionInfo.cs</Link>
     </Compile>
@@ -80,7 +83,6 @@
     <Compile Include="ActorInfo.GetType.cs" />
     <Compile Include="FurnitureDetails.cs" />
     <Compile Include="HashCode.cs" />
-    <Compile Include="LoadException.cs" />
     <Compile Include="PositionDetails.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

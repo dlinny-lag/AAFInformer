@@ -1,22 +1,12 @@
 #include <shlobj.h>
 #include "Shlwapi.h"
 #include "f4se/PluginAPI.h"
-#include "f4se_common/f4se_version.h"
 #include "f4se/PapyrusVM.h"
 #include "f4se/GameForms.h"
 #include "PluginAPIExport.hpp"
 #include "FurnitureCache.h"
 
-#if F4SE_PRE_DECLARATIVE_LOAD
-	#define REQUIRED_RUNTIME RUNTIME_VERSION_1_10_163
-#endif
-#if _F4SE_DECLARATIVE_LOAD
-	#define REQUIRED_RUNTIME RUNTIME_VERSION_1_10_984
-#endif
-
-#ifndef REQUIRED_RUNTIME
-	#error Invalid project configuration
-#endif
+#include "f4_runtime.h"
 
 F4SEPapyrusInterface* g_papyrus = nullptr;
 F4SEMessagingInterface* g_messaging = nullptr;

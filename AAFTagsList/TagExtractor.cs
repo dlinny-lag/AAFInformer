@@ -72,7 +72,8 @@ namespace AAFTagsList
             string content = File.ReadAllText(fileName);
             if (string.IsNullOrWhiteSpace(content))
                 return;
-            XmlDocument doc = XmlFileLoader.LoadString(content);
+            LoadException exception = null;
+            XmlDocument doc = XmlFileLoader.LoadString(content, ref exception);
 
             if (doc == null)
                 return;

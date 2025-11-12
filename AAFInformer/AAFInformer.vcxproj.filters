@@ -177,12 +177,12 @@
     <ClInclude Include="blake2-impl.h">
       <Filter>blake2</Filter>
     </ClInclude>
+    <ClInclude Include="f4_runtime.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="VersionInfo.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="exports.def" />
     <None Include="$(F4SEPath)\f4se\GameRTTI.inl">
       <Filter>f4se</Filter>
     </None>
